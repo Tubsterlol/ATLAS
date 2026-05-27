@@ -1,0 +1,223 @@
+# =========================================
+# ATLAS — Global Git Ignore
+# =========================================
+
+# =========================================
+# Python
+# =========================================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Compiled Extensions
+*.so
+
+# =========================================
+# Virtual Environments
+# =========================================
+venv/
+.venv/
+env/
+ENV/
+
+# =========================================
+# Python Packaging
+# =========================================
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# =========================================
+# Testing / Coverage
+# =========================================
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# =========================================
+# Type Checking / Linting
+# =========================================
+.mypy_cache/
+.ruff_cache/
+.dmypy.json
+.pyre/
+
+# =========================================
+# Logs
+# =========================================
+logs/
+*.log
+
+# =========================================
+# Benchmarks Output
+# =========================================
+benchmarks/output/
+benchmarks/results/
+
+# =========================================
+# Simulation Outputs
+# =========================================
+outputs/
+results/
+exports/
+snapshots/
+telemetry/
+
+# =========================================
+# Dataset Artifacts
+# =========================================
+datasets/raw/
+datasets/cache/
+datasets/tmp/
+
+# Large datasets
+*.csv
+*.parquet
+*.feather
+*.h5
+
+# Keep placeholder dirs
+!datasets/**/.gitkeep
+
+# =========================================
+# Database
+# =========================================
+*.db
+*.sqlite3
+
+# PostgreSQL local data
+postgres_data/
+
+# Alembic cache
+alembic/__pycache__/
+
+# =========================================
+# Environment Variables
+# =========================================
+.env
+.env.*
+!.env.example
+
+# =========================================
+# Docker
+# =========================================
+.docker/
+docker-compose.override.yml
+
+# =========================================
+# IDEs / Editors
+# =========================================
+
+# VSCode
+.vscode/
+
+# PyCharm / IntelliJ
+.idea/
+
+# Vim
+*.swp
+*.swo
+
+# Emacs
+*~
+
+# =========================================
+# OS Files
+# =========================================
+
+# Linux
+.Trash-*
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# =========================================
+# Jupyter
+# =========================================
+.ipynb_checkpoints/
+
+# =========================================
+# Temporary Files
+# =========================================
+tmp/
+temp/
+*.tmp
+
+# =========================================
+# Textual
+# =========================================
+.textual_cache/
+
+# =========================================
+# API Runtime
+# =========================================
+uvicorn.log
+
+# =========================================
+# Analytics / Graph Exports
+# =========================================
+analytics/exports/generated/
+analytics/graphs/generated/
+
+# =========================================
+# Simulation Recordings
+# =========================================
+recordings/
+
+# =========================================
+# Binary Files
+# =========================================
+*.bin
+*.dat
+
+# =========================================
+# Future ML/AI Extensions
+# =========================================
+models/
+checkpoints/
+*.pt
+*.pth
+*.onnx
+
+# =========================================
+# Future CFD/Scientific Compute Cache
+# =========================================
+cache/
+.scipy/
+.numpy/
+
+# =========================================
+# Secrets / Keys
+# =========================================
+*.pem
+*.key
+*.crt
+secrets/
+
+# =========================================
+# Future Frontend Builds
+# =========================================
+node_modules/
+.next/
+out/
+dist-frontend/
+
+# =========================================
+# Keep Empty Structure
+# =========================================
+!.gitkeep
