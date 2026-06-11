@@ -1,31 +1,13 @@
-from scripts.load_satellites import (
-    load_satellite_dataset
-)
+from analytics.exports.csv_exporter import export_csv
+from scripts.load_satellites import load_satellite_dataset
+from simulation.satellite_simulator import SatelliteSimulation
 
-from simulation.satellite_simulator import (
-    SatelliteSimulation
-)
-
-from analytics.exports.csv_exporter import (
-    export_csv
-)
-
-satellites = load_satellite_dataset(
-    "datasets/satellites/satellites.csv"
-)
+satellites = load_satellite_dataset("datasets/satellites/satellites.csv")
 
 iss = satellites["ISS"]
 
-simulation = SatelliteSimulation(
-    satellite=iss,
-    timestep_s=60
-)
+simulation = SatelliteSimulation(satellite=iss, timestep_s=60)
 
-results = simulation.run_step_count(
-    1000
-)
+results = simulation.run_step_count(1000)
 
-export_csv(
-    results,
-    "outputs/iss_decay.csv"
-)
+export_csv(results, "outputs/iss_decay.csv")

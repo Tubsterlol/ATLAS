@@ -9,5 +9,5 @@ BOEING_737 = Aircraft(
     drag_coefficient=0.024,
     lift_coefficient=1.5,
     thrust_n=242000,
-    max_speed_ms=230
+    max_speed_ms=230,
 )

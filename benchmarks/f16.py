@@ -9,5 +9,5 @@ F16 = Aircraft(
     drag_coefficient=0.02,
     lift_coefficient=1.4,
     thrust_n=129000,
-    max_speed_ms=660
+    max_speed_ms=660,
 )

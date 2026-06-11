@@ -1,6 +1,4 @@
-from aerospace.physics.gravity import (
-    gravity_at_altitude
-)
+from aerospace.physics.gravity import gravity_at_altitude
 
 
 def test_surface_gravity():

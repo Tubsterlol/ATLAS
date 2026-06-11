@@ -1,11 +1,5 @@
-from aerospace.aircraft.aircraft import (
-    Aircraft
-)
-
-from simulation.aircraft_simulator import (
-    AircraftSimulation
-)
-
+from aerospace.aircraft.aircraft import Aircraft
+from simulation.aircraft_simulator import AircraftSimulation
 
 aircraft = Aircraft(
     name="F-16",
@@ -16,18 +10,12 @@ aircraft = Aircraft(
     drag_coefficient=0.02,
     lift_coefficient=1.4,
     thrust_n=129_000,
-    max_speed_ms=660
+    max_speed_ms=660,
 )
 
-simulation = AircraftSimulation(
-    aircraft=aircraft,
-    velocity_ms=250,
-    timestep_s=1
-)
+simulation = AircraftSimulation(aircraft=aircraft, velocity_ms=250, timestep_s=1)
 
-results = simulation.run_step_count(
-    5
-)
+results = simulation.run_step_count(5)
 
 for result in results:
     print(result)

@@ -2,6 +2,7 @@ from aerospace.physics.constants import *
 
 # Distance
 
+
 def km_to_meters(km: float) -> float:
     return km * KM_TO_M
 
@@ -24,6 +25,7 @@ def miles_to_km(miles: float) -> float:
 
 # Speed
 
+
 def kmh_to_ms(speed_kmh: float) -> float:
     return speed_kmh * KMH_TO_MS
 
@@ -42,6 +44,7 @@ def ms_to_mph(speed_ms: float) -> float:
 
 # Angles
 
+
 def degrees_to_radians(degrees: float) -> float:
     return degrees * DEG_TO_RAD
 
@@ -51,6 +54,7 @@ def radians_to_degrees(radians: float) -> float:
 
 
 # Mass
+
 
 def kg_to_lbs(kg: float) -> float:
     return kg * KG_TO_LBS

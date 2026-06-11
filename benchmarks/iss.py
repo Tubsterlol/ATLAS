@@ -5,5 +5,5 @@ ISS = Satellite(
     mass_kg=419725,
     cross_sectional_area_m2=2500,
     drag_coefficient=2.0,
-    altitude_m=408000
+    altitude_m=408000,
 )
