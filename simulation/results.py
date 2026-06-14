@@ -14,6 +14,8 @@ class AircraftResult:
     density: float
     temperature_k: float
     altitude_m: float
+    fuel_kg: float
+    effective_mass_kg: float
 
 
 @dataclass

@@ -39,6 +39,8 @@ class AircraftSimulation(BaseSimulation):
 
         temperature = isa_temperature(self.aircraft_state.altitude_m)
 
+        effective_mass = self.aircraft.mass_kg + self.aircraft_state.fuel_kg
+
         lift = aircraft_lift(
             density=density,
             velocity_ms=self.aircraft_state.velocity_ms,
@@ -54,20 +56,18 @@ class AircraftSimulation(BaseSimulation):
         )
 
         stall = stall_speed(
-            mass_kg=self.aircraft.mass_kg,
+            mass_kg=effective_mass,
             wing_area_m2=self.aircraft.wing_area_m2,
             lift_coefficient=self.aircraft.lift_coefficient,
         )
 
         twr = aircraft_thrust_to_weight(
             thrust_n=self.aircraft.thrust_n,
-            mass_kg=self.aircraft.mass_kg,
+            mass_kg=effective_mass,
         )
 
         climb_force = (
-            self.aircraft.mass_kg
-            * EARTH_STANDARD_GRAVITY
-            * self.aircraft_state.climb_rate_ms
+            effective_mass * EARTH_STANDARD_GRAVITY * self.aircraft_state.climb_rate_ms
         ) / max(
             self.aircraft_state.velocity_ms,
             1.0,
@@ -75,7 +75,7 @@ class AircraftSimulation(BaseSimulation):
 
         net_force = self.aircraft.thrust_n - drag - climb_force
 
-        acceleration = net_force / self.aircraft.mass_kg
+        acceleration = net_force / effective_mass
 
         self.aircraft_state.velocity_ms += acceleration * self.state.timestep_s
 
@@ -93,6 +93,13 @@ class AircraftSimulation(BaseSimulation):
             density=density,
             velocity_ms=self.aircraft_state.velocity_ms,
             characteristic_length_m=self.aircraft.wingspan_m,
+        )
+
+        fuel_used = self.aircraft.fuel_burn_kg_s * self.state.timestep_s
+
+        self.aircraft_state.fuel_kg = max(
+            0.0,
+            self.aircraft_state.fuel_kg - fuel_used,
         )
 
         self.aircraft_state.altitude_m += (
@@ -123,4 +130,6 @@ class AircraftSimulation(BaseSimulation):
             reynolds_number=reynolds,
             density=density,
             temperature_k=temperature,
+            fuel_kg=self.aircraft_state.fuel_kg,
+            effective_mass_kg=effective_mass,
         )
