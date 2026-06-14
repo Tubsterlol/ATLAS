@@ -1,6 +1,7 @@
 import math
 
-SEA_LEVEL_TEMP = 288.15
+density = isa_density(self.aircraft_state.altitude_m)
+
 SEA_LEVEL_PRESSURE = 101325
 
 LAPSE_RATE = 0.0065
