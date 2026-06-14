@@ -11,6 +11,9 @@ class AircraftResult:
     thrust_to_weight: float
     mach: float
     reynolds_number: float
+    density: float
+    temperature_k: float
+    altitude_m: float
 
 
 @dataclass

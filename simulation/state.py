@@ -14,6 +14,7 @@ class AircraftState:
     altitude_m: float = 0.0
     velocity_ms: float = 0.0
     fuel_kg: float = 0.0
+    climb_rate_ms: float = 0.0
 
 
 @dataclass

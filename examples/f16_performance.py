@@ -11,6 +11,7 @@ state = AircraftState(
     altitude_m=0,
     velocity_ms=250,
     fuel_kg=3000,
+    climb_rate_ms=15,
 )
 
 simulation = AircraftSimulation(
