@@ -16,9 +16,12 @@ class AircraftResult:
     altitude_m: float
     fuel_kg: float
     effective_mass_kg: float
+    phase: str
+    x_m: float
+    y_m: float
+    heading_deg: float
 
 
-@dataclass
 @dataclass
 class SatelliteResult:
     time_s: float
