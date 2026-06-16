@@ -12,6 +12,7 @@ from aerospace.atmosphere.isa import (
     isa_density,
     isa_temperature,
 )
+from aerospace.navigation.navigation import update_position
 from aerospace.physics.constants import (
     EARTH_STANDARD_GRAVITY,
 )
@@ -123,6 +124,14 @@ class AircraftSimulation(BaseSimulation):
 
         self.aircraft_state.time_s = self.state.time_s
 
+        self.aircraft_state.x_m, self.aircraft_state.y_m = update_position(
+            x_m=self.aircraft_state.x_m,
+            y_m=self.aircraft_state.y_m,
+            velocity_ms=self.aircraft_state.velocity_ms,
+            heading_deg=self.aircraft_state.heading_deg,
+            timestep_s=self.state.timestep_s,
+        )
+
         return AircraftResult(
             time_s=self.state.time_s,
             altitude_m=self.aircraft_state.altitude_m,
@@ -137,4 +146,8 @@ class AircraftSimulation(BaseSimulation):
             temperature_k=temperature,
             fuel_kg=self.aircraft_state.fuel_kg,
             effective_mass_kg=effective_mass,
+            phase=self.aircraft_state.phase,
+            x_m=self.aircraft_state.x_m,
+            y_m=self.aircraft_state.y_m,
+            heading_deg=self.aircraft_state.heading_deg,
         )
