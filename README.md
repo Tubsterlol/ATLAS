@@ -1,44 +1,144 @@
-## Aerodynamics Simulation
+# ATLAS
 
-A physics-based aerospace simulation that models the effects of atmospheric drag on satellites in Low Earth Orbit (LEO). The project calculates drag forces, orbital velocity changes, and altitude decay over time using numerical methods and simplified atmospheric models. It provides insights into orbital lifetime prediction, satellite performance, and the impact of aerodynamic forces in near-Earth space.
+ATLAS is a modular aerospace simulation framework for modeling aircraft and satellite dynamics. It combines aerodynamic, atmospheric, and orbital physics with time-stepped simulation systems to support engineering analysis, education, and research.
 
-### Features
+The project provides reusable physics models, simulation runtimes, mission profiles, scenario execution, and analytics tools for studying aerospace systems under realistic operating conditions.
 
-* Atmospheric drag force calculation
-* Orbital velocity and altitude tracking
-* Orbital decay rate estimation
-* Time-based simulation and data logging
-* CSV output for analysis and visualization
+---
 
-### Applications
+## Features
 
-* Satellite mission analysis
-* Orbital lifetime estimation
-* Aerospace engineering education
-* Physics and numerical simulation studies
+### Aircraft Simulation
 
-## Current Features
+ATLAS includes a physics-based aircraft performance simulator capable of modeling:
 
-### Aircraft
-- Lift calculation
-- Drag calculation
-- Stall speed estimation
-- Thrust-to-weight ratio
-- Mach number
-- Reynolds number
-- Time-stepped simulation
+* Lift generation
+* Aerodynamic drag
+* Stall speed estimation
+* Thrust-to-weight ratio
+* Mach number calculation
+* Reynolds number calculation
+* ISA atmosphere modeling
+* Fuel consumption and effective mass tracking
+* Altitude and climb rate simulation
+* Position and heading tracking
+* Mission profile support
+* Time-stepped flight simulation
 
-### Satellites
-- Orbital velocity calculation
-- Atmospheric drag
-- Orbital decay simulation
-- Time-stepped propagation
+### Satellite Simulation
+
+ATLAS includes orbital and atmospheric models for Low Earth Orbit (LEO) satellites:
+
+* Orbital velocity calculation
+* Atmospheric density modeling
+* Satellite drag force calculation
+* Orbital altitude tracking
+* Orbital decay estimation
+* Time-stepped propagation
+* Satellite state management
+
+### Atmosphere & Physics
+
+Shared physics modules provide:
+
+* International Standard Atmosphere (ISA)
+* Atmospheric density models
+* Orbital density models
+* Gravity calculations
+* Aerodynamic force equations
+* Orbital mechanics utilities
+* Aerospace constants and unit systems
 
 ### Analytics
-- CSV export
-- JSON export
-- Graph generation
+
+Simulation outputs can be exported and analyzed through:
+
+* CSV export
+* JSON export
+* Performance graphs
+* Decay graphs
+* Simulation result logging
 
 ### Scenario System
-- Aircraft scenarios
-- Satellite scenarios
+
+ATLAS supports reusable simulation scenarios:
+
+* Aircraft scenarios
+* Satellite scenarios
+* Mission profiles
+* Batch simulation execution
+
+---
+
+## Applications
+
+* Aerospace engineering education
+* Aircraft performance analysis
+* Satellite mission analysis
+* Orbital lifetime estimation
+* Flight profile evaluation
+* Physics-based simulation studies
+* Research and experimentation
+
+---
+
+## Current Aircraft Capabilities
+
+* Lift calculation
+* Drag calculation
+* Stall speed estimation
+* Thrust-to-weight ratio
+* Mach number
+* Reynolds number
+* ISA atmosphere integration
+* Fuel burn simulation
+* Effective mass calculation
+* Altitude propagation
+* Position tracking
+* Heading tracking
+* Mission profile execution
+
+---
+
+## Current Satellite Capabilities
+
+* Orbital velocity calculation
+* Atmospheric drag modeling
+* Orbital decay simulation
+* Altitude propagation
+* Time-stepped orbital simulation
+
+---
+
+## Project Goals
+
+### Near-Term
+
+* Aircraft flight envelopes
+* Autopilot systems
+* Waypoint navigation
+* Orbital element propagation
+* Ground track generation
+* Satellite maneuver modeling
+
+### Long-Term
+
+* Unified aerospace simulation engine
+* Advanced atmospheric models
+* Multi-vehicle simulations
+* Visualization tools
+* High-performance Rust simulation runtime
+
+---
+
+## Output
+
+ATLAS generates structured simulation data that can be exported for further analysis and visualization.
+
+Example outputs include:
+
+* Aircraft performance datasets
+* Fuel consumption profiles
+* Flight trajectory data
+* Satellite decay datasets
+* Orbital propagation results
