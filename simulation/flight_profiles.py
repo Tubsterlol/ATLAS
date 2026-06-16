@@ -1,10 +1,19 @@
-def commercial_climb():
-    return 10
+class ClimbProfile:
+    def __init__(self, climb_rate_ms: float):
+        self.climb_rate_ms = climb_rate_ms
+
+    def update(self, state):
+        state.climb_rate_ms = self.climb_rate_ms
 
 
-def fighter_climb():
-    return 50
+class CruiseProfile:
+    def update(self, state):
+        state.climb_rate_ms = 0.0
 
 
-def descent():
-    return -8
+class DescentProfile:
+    def __init__(self, descent_rate_ms: float):
+        self.descent_rate_ms = descent_rate_ms
+
+    def update(self, state):
+        state.climb_rate_ms = -self.descent_rate_ms

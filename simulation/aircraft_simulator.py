@@ -26,14 +26,19 @@ class AircraftSimulation(BaseSimulation):
         self,
         aircraft,
         initial_state: AircraftState,
+        profile=None,
         timestep_s: float = 1.0,
     ):
         super().__init__(timestep_s)
 
         self.aircraft = aircraft
         self.aircraft_state = initial_state
+        self.profile = profile
 
     def step(self):
+
+        if self.profile:
+            self.profile.update(self.aircraft_state)
 
         density = isa_density(self.aircraft_state.altitude_m)
 
