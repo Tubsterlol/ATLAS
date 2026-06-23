@@ -11,18 +11,13 @@ class SimulationState:
 @dataclass
 class AircraftState:
     time_s: float = 0.0
-
     altitude_m: float = 0.0
     velocity_ms: float = 0.0
     fuel_kg: float = 0.0
-
     climb_rate_ms: float = 0.0
-
     phase: str = "climb"
-
     x_m: float = 0.0
     y_m: float = 0.0
-
     heading_deg: float = 0.0
 
 
@@ -31,3 +26,6 @@ class SatelliteState:
     time_s: float = 0.0
     altitude_m: float = 0.0
     velocity_ms: float = 0.0
+    inclination_deg: float = 0.0
+    eccentricity: float = 0.0
+    semi_major_axis_m: float = 0.0

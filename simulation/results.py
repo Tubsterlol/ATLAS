@@ -29,3 +29,8 @@ class SatelliteResult:
     velocity_ms: float
     drag_force_n: float
     decay_rate: float
+    orbital_period_s: float
+    semi_major_axis_m: float
+    orbital_energy_j_kg: float
+    apoapsis_m: float
+    periapsis_m: float
