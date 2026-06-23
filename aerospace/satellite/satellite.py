@@ -5,7 +5,6 @@ from dataclasses import dataclass
 class Satellite:
     name: str
     mass_kg: float
-    cross_sectional_area_m2: float
-    drag_coefficient: float
     altitude_m: float
-    velocity_ms: float = 0.0
+    drag_coefficient: float
+    cross_sectional_area_m2: float

@@ -29,3 +29,10 @@ class SatelliteState:
     inclination_deg: float = 0.0
     eccentricity: float = 0.0
     semi_major_axis_m: float = 0.0
+    orbital_period_s: float = 0.0
+    orbital_energy_j_kg: float = 0.0
+    apoapsis_m: float = 0.0
+    periapsis_m: float = 0.0
+    true_anomaly_deg: float = 0.0
+    latitude_deg: float = 0.0
+    longitude_deg: float = 0.0

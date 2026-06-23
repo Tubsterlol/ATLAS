@@ -34,3 +34,8 @@ class SatelliteResult:
     orbital_energy_j_kg: float
     apoapsis_m: float
     periapsis_m: float
+    inclination_deg: float
+    eccentricity: float
+    true_anomaly_deg: float
+    latitude_deg: float
+    longitude_deg: float
