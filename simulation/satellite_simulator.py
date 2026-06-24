@@ -2,6 +2,7 @@ from aerospace.satellite.decay import simulate_decay_step
 from aerospace.satellite.groundtrack import (
     groundtrack_position,
 )
+from aerospace.satellite.maneuvers import orbit_raise
 from aerospace.satellite.orbital_motion import (
     advance_true_anomaly,
 )
@@ -23,12 +24,16 @@ class SatelliteSimulation(BaseSimulation):
         self,
         satellite,
         initial_state: SatelliteState,
+        maneuvers=None,
         timestep_s: float = 1.0,
     ):
         super().__init__(timestep_s)
 
         self.satellite = satellite
         self.satellite_state = initial_state
+
+        self.maneuvers = maneuvers or []
+        self.executed_maneuvers = set()
 
     def step(self):
 
@@ -40,10 +45,20 @@ class SatelliteSimulation(BaseSimulation):
             timestep_s=self.state.timestep_s,
         )
 
-        latitude_deg, longitude_deg = groundtrack_position(
-            true_anomaly_deg=self.satellite_state.true_anomaly_deg,
-            inclination_deg=self.satellite_state.inclination_deg,
-        )
+        self.satellite_state.altitude_m = result["altitude_m"]
+        self.satellite_state.velocity_ms = result["velocity_ms"]
+
+        for index, maneuver in enumerate(self.maneuvers):
+            if (
+                index not in self.executed_maneuvers
+                and self.state.time_s >= maneuver.time_s
+            ):
+                self.satellite_state.altitude_m = orbit_raise(
+                    altitude_m=self.satellite_state.altitude_m,
+                    delta_v_ms=maneuver.delta_v_ms,
+                )
+
+                self.executed_maneuvers.add(index)
 
         self.state.time_s = advance_time(
             self.state.time_s,
@@ -51,8 +66,6 @@ class SatelliteSimulation(BaseSimulation):
         )
 
         self.satellite_state.time_s = self.state.time_s
-        self.satellite_state.altitude_m = result["altitude_m"]
-        self.satellite_state.velocity_ms = result["velocity_ms"]
 
         altitude = self.satellite_state.altitude_m
 
@@ -64,25 +77,24 @@ class SatelliteSimulation(BaseSimulation):
             timestep_s=self.state.timestep_s,
         )
 
+        latitude_deg, longitude_deg = groundtrack_position(
+            true_anomaly_deg=self.satellite_state.true_anomaly_deg,
+            inclination_deg=self.satellite_state.inclination_deg,
+        )
+
         axis = semi_major_axis(altitude)
         energy = orbital_energy(altitude)
         apo = apoapsis(altitude)
         peri = periapsis(altitude)
 
-        self.satellite_state.orbital_period_s = period
         self.satellite_state.semi_major_axis_m = axis
-        self.satellite_state.orbital_energy_j_kg = energy
-        self.satellite_state.apoapsis_m = apo
-        self.satellite_state.periapsis_m = peri
         self.satellite_state.latitude_deg = latitude_deg
         self.satellite_state.longitude_deg = longitude_deg
-
-        self.satellite_state.semi_major_axis_m = axis
 
         return SatelliteResult(
             time_s=self.state.time_s,
             altitude_m=altitude,
-            velocity_ms=result["velocity_ms"],
+            velocity_ms=self.satellite_state.velocity_ms,
             drag_force_n=result["drag_force_n"],
             decay_rate=result["decay_rate"],
             orbital_period_s=period,
@@ -93,6 +105,6 @@ class SatelliteSimulation(BaseSimulation):
             inclination_deg=self.satellite_state.inclination_deg,
             eccentricity=self.satellite_state.eccentricity,
             true_anomaly_deg=self.satellite_state.true_anomaly_deg,
-            latitude_deg=self.satellite_state.latitude_deg,
-            longitude_deg=self.satellite_state.longitude_deg,
+            latitude_deg=latitude_deg,
+            longitude_deg=longitude_deg,
         )
