@@ -24,6 +24,7 @@ class AircraftResult:
 
 @dataclass
 class SatelliteResult:
+    satellite_name: str
     time_s: float
     altitude_m: float
     velocity_ms: float

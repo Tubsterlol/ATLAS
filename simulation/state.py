@@ -23,6 +23,7 @@ class AircraftState:
 
 @dataclass
 class SatelliteState:
+    satellite_name: str
     time_s: float = 0.0
     altitude_m: float = 0.0
     velocity_ms: float = 0.0

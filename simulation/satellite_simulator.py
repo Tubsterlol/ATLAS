@@ -1,11 +1,7 @@
 from aerospace.satellite.decay import simulate_decay_step
-from aerospace.satellite.groundtrack import (
-    groundtrack_position,
-)
+from aerospace.satellite.groundtrack import groundtrack_position
 from aerospace.satellite.maneuvers import orbit_raise
-from aerospace.satellite.orbital_motion import (
-    advance_true_anomaly,
-)
+from aerospace.satellite.orbital_motion import advance_true_anomaly
 from aerospace.satellite.orbital_parameters import (
     apoapsis,
     orbital_energy,
@@ -72,7 +68,7 @@ class SatelliteSimulation(BaseSimulation):
                     target_altitude_m=maneuver.target_altitude_m,
                     tolerance_m=maneuver.tolerance_m,
                 )
-                altitude = self.satellite_state.altitude_m
+
         self.state.time_s = advance_time(
             self.state.time_s,
             self.state.timestep_s,
@@ -105,6 +101,7 @@ class SatelliteSimulation(BaseSimulation):
         self.satellite_state.longitude_deg = longitude_deg
 
         return SatelliteResult(
+            satellite_name=self.satellite_state.satellite_name,
             time_s=self.state.time_s,
             altitude_m=altitude,
             velocity_ms=self.satellite_state.velocity_ms,
