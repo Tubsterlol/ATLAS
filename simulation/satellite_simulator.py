@@ -14,8 +14,13 @@ from aerospace.satellite.orbital_parameters import (
     semi_major_axis,
 )
 from simulation.base import BaseSimulation
+from simulation.maneuvers import (
+    OrbitRaiseManeuver,
+    StationKeepingManeuver,
+)
 from simulation.results import SatelliteResult
 from simulation.state import SatelliteState
+from simulation.station_keeping import station_keep
 from simulation.timestep import advance_time
 
 
@@ -49,17 +54,25 @@ class SatelliteSimulation(BaseSimulation):
         self.satellite_state.velocity_ms = result["velocity_ms"]
 
         for index, maneuver in enumerate(self.maneuvers):
-            if (
-                index not in self.executed_maneuvers
-                and self.state.time_s >= maneuver.time_s
-            ):
-                self.satellite_state.altitude_m = orbit_raise(
-                    altitude_m=self.satellite_state.altitude_m,
-                    delta_v_ms=maneuver.delta_v_ms,
+            if isinstance(maneuver, OrbitRaiseManeuver):
+                if (
+                    index not in self.executed_maneuvers
+                    and self.state.time_s >= maneuver.time_s
+                ):
+                    self.satellite_state.altitude_m = orbit_raise(
+                        altitude_m=self.satellite_state.altitude_m,
+                        delta_v_ms=maneuver.delta_v_ms,
+                    )
+
+                    self.executed_maneuvers.add(index)
+
+            elif isinstance(maneuver, StationKeepingManeuver):
+                self.satellite_state.altitude_m = station_keep(
+                    current_altitude_m=self.satellite_state.altitude_m,
+                    target_altitude_m=maneuver.target_altitude_m,
+                    tolerance_m=maneuver.tolerance_m,
                 )
-
-                self.executed_maneuvers.add(index)
-
+                altitude = self.satellite_state.altitude_m
         self.state.time_s = advance_time(
             self.state.time_s,
             self.state.timestep_s,

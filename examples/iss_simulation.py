@@ -1,6 +1,6 @@
 from analytics.exports.csv_exporter import export_csv
 from scripts.load_satellites import load_satellite_dataset
-from simulation.maneuver import OrbitalManeuver
+from simulation.maneuvers import StationKeepingManeuver
 from simulation.satellite_simulator import SatelliteSimulation
 from simulation.state import SatelliteState
 
@@ -9,10 +9,10 @@ satellites = load_satellite_dataset("datasets/satellites/satellites.csv")
 iss = satellites["ISS"]
 
 maneuvers = [
-    OrbitalManeuver(
-        time_s=3600,
-        delta_v_ms=25,
-    ),
+    StationKeepingManeuver(
+        target_altitude_m=408000,
+        tolerance_m=100,
+    )
 ]
 
 state = SatelliteState(
