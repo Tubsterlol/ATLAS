@@ -1,4 +1,7 @@
-from aerospace.physics.constants import EARTH_GRAVITATIONAL_PARAMETER, EARTH_RADIUS_M
+from aerospace.physics.constants import (
+    EARTH_GRAVITATIONAL_PARAMETER,
+    EARTH_RADIUS_M,
+)
 
 
 def orbit_raise(
@@ -6,17 +9,19 @@ def orbit_raise(
     delta_v_ms: float,
 ) -> float:
 
-    orbital_radius = EARTH_RADIUS_M + altitude_m
+    r = EARTH_RADIUS_M + altitude_m
 
-    velocity = (EARTH_GRAVITATIONAL_PARAMETER / orbital_radius) ** 0.5
+    v = (EARTH_GRAVITATIONAL_PARAMETER / r) ** 0.5
 
-    new_velocity = velocity + delta_v_ms
+    new_v = v + delta_v_ms
 
-    new_radius = EARTH_GRAVITATIONAL_PARAMETER / (new_velocity**2)
+    specific_energy = (new_v**2 / 2) - (EARTH_GRAVITATIONAL_PARAMETER / r)
+
+    new_a = -EARTH_GRAVITATIONAL_PARAMETER / (2 * specific_energy)
 
     return max(
         0.0,
-        new_radius - EARTH_RADIUS_M,
+        new_a - EARTH_RADIUS_M,
     )
 
 
@@ -26,6 +31,6 @@ def orbit_lower(
 ) -> float:
 
     return orbit_raise(
-        altitude_m=altitude_m,
-        delta_v_ms=-abs(delta_v_ms),
+        altitude_m,
+        -abs(delta_v_ms),
     )
