@@ -74,6 +74,10 @@ exports/
 snapshots/
 telemetry/
 
+# ATLAS source exporters (the rule above is for generated simulation output)
+!analytics/exports/
+!analytics/exports/**/*.py
+
 # =========================================
 # Dataset Artifacts
 # =========================================
@@ -193,6 +197,12 @@ checkpoints/
 *.pt
 *.pth
 *.onnx
+
+# ATLAS source models (the rule above is for generated ML artifacts only)
+!aerospace/aircraft/models/
+!aerospace/aircraft/models/**/*.py
+!aerospace/satellite/models/
+!aerospace/satellite/models/**/*.py
 
 # =========================================
 # Future CFD/Scientific Compute Cache
