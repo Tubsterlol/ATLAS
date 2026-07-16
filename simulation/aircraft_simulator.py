@@ -51,19 +51,19 @@ class AircraftSimulation(BaseSimulation):
             density=density,
             velocity_ms=self.aircraft_state.velocity_ms,
             lift_coefficient=self.aircraft.lift_coefficient,
-            wing_area_m2=self.aircraft.wing_area_m2,
+            wing_area_m2=self.aircraft.geometry.wing_area_m2,
         )
 
         drag = aircraft_drag(
             density=density,
             velocity_ms=self.aircraft_state.velocity_ms,
             drag_coefficient=self.aircraft.drag_coefficient,
-            reference_area_m2=self.aircraft.wing_area_m2,
+            reference_area_m2=self.aircraft.geometry.wing_area_m2,
         )
 
         stall = stall_speed(
             mass_kg=effective_mass,
-            wing_area_m2=self.aircraft.wing_area_m2,
+            wing_area_m2=self.aircraft.geometry.wing_area_m2,
             lift_coefficient=self.aircraft.lift_coefficient,
         )
 
@@ -98,7 +98,7 @@ class AircraftSimulation(BaseSimulation):
         reynolds = reynolds_number(
             density=density,
             velocity_ms=self.aircraft_state.velocity_ms,
-            characteristic_length_m=self.aircraft.wingspan_m,
+            characteristic_length_m=self.aircraft.geometry.wing_span_m,
         )
 
         fuel_used = self.aircraft.fuel_burn_kg_s * self.state.timestep_s
