@@ -11,6 +11,7 @@ from aerospace.aircraft.performance import (
     aircraft_thrust_to_weight,
     stall_speed,
 )
+from aerospace.aircraft.trim import trim_angle_of_attack
 from aerospace.aircraft.wave_drag import wave_drag_coefficient
 from aerospace.atmosphere.isa import (
     isa_density,
@@ -50,6 +51,15 @@ class AircraftSimulation(BaseSimulation):
         temperature = isa_temperature(self.aircraft_state.altitude_m)
 
         effective_mass = self.aircraft.mass_kg + self.aircraft_state.fuel_kg
+
+        required_lift = effective_mass * EARTH_STANDARD_GRAVITY
+
+        self.aircraft_state.alpha_deg = trim_angle_of_attack(
+            required_lift_n=required_lift,
+            density=density,
+            velocity_ms=self.aircraft_state.velocity_ms,
+            wing_area_m2=self.aircraft.geometry.wing_area_m2,
+        )
 
         cl = lift_coefficient(
             self.aircraft_state.alpha_deg,
