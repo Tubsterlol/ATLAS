@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from aerospace.aircraft.geometry_calculations import aspect_ratio
 from aerospace.aircraft.induced_drag import induced_drag_coefficient
+from aerospace.aircraft.wave_drag import wave_drag_coefficient
 
 
 @dataclass
@@ -28,6 +29,7 @@ class AircraftResult:
     drag_coefficient: float
     induced_drag_coefficient: float
     aspect_ratio: float
+    wave_drag_coefficient: float
 
 
 @dataclass

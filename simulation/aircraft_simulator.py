@@ -11,6 +11,7 @@ from aerospace.aircraft.performance import (
     aircraft_thrust_to_weight,
     stall_speed,
 )
+from aerospace.aircraft.wave_drag import wave_drag_coefficient
 from aerospace.atmosphere.isa import (
     isa_density,
     isa_temperature,
@@ -64,7 +65,16 @@ class AircraftSimulation(BaseSimulation):
             aspect_ratio=ar,
         )
 
-        total_cd = self.aircraft.drag_coefficient + cdi
+        mach = mach_number(
+            velocity_ms=self.aircraft_state.velocity_ms,
+            temperature_k=temperature,
+        )
+
+        wave_cd = wave_drag_coefficient(
+            mach,
+        )
+
+        total_cd = self.aircraft.drag_coefficient + cdi + wave_cd
 
         lift = aircraft_lift(
             density=density,
@@ -107,11 +117,6 @@ class AircraftSimulation(BaseSimulation):
         self.aircraft_state.velocity_ms = min(
             self.aircraft_state.velocity_ms,
             self.aircraft.max_speed_ms,
-        )
-
-        mach = mach_number(
-            velocity_ms=self.aircraft_state.velocity_ms,
-            temperature_k=temperature,
         )
 
         reynolds = reynolds_number(
@@ -174,4 +179,5 @@ class AircraftSimulation(BaseSimulation):
             drag_coefficient=total_cd,
             induced_drag_coefficient=cdi,
             aspect_ratio=ar,
+            wave_drag_coefficient=wave_cd,
         )
