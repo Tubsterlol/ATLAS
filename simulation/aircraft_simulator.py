@@ -1,3 +1,5 @@
+import logging
+
 from aerospace.aircraft.aerodynamics.drag import aircraft_drag
 from aerospace.aircraft.aerodynamics.induced_drag import induced_drag_coefficient
 from aerospace.aircraft.aerodynamics.lift import aircraft_lift
@@ -27,6 +29,9 @@ from simulation.state import AircraftState
 from simulation.timestep import advance_time
 
 
+logger = logging.getLogger(__name__)
+
+
 class AircraftSimulation(BaseSimulation):
     def __init__(
         self,
@@ -40,6 +45,11 @@ class AircraftSimulation(BaseSimulation):
         self.aircraft = aircraft
         self.aircraft_state = initial_state
         self.profile = profile
+        logger.info(
+            "Initialized aircraft simulation for %s with a %.3f s timestep",
+            aircraft.name,
+            timestep_s,
+        )
 
     def step(self):
 
@@ -141,10 +151,17 @@ class AircraftSimulation(BaseSimulation):
 
         fuel_used = self.aircraft.fuel_burn_kg_s * self.state.timestep_s
 
+        previous_fuel_kg = self.aircraft_state.fuel_kg
         self.aircraft_state.fuel_kg = max(
             0.0,
             self.aircraft_state.fuel_kg - fuel_used,
         )
+        if previous_fuel_kg > 0.0 and self.aircraft_state.fuel_kg == 0.0:
+            logger.warning(
+                "Aircraft %s depleted its fuel at %.3f s",
+                self.aircraft.name,
+                self.state.time_s + self.state.timestep_s,
+            )
 
         self.aircraft_state.altitude_m += (
             self.aircraft_state.climb_rate_ms * self.state.timestep_s

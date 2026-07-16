@@ -1,3 +1,5 @@
+import logging
+
 from aerospace.satellite.perturbations.decay import simulate_decay_step
 from aerospace.satellite.orbit.groundtrack import groundtrack_position
 from aerospace.satellite.maneuvers.maneuvers import orbit_raise
@@ -20,6 +22,9 @@ from simulation.station_keeping import station_keep
 from simulation.timestep import advance_time
 
 
+logger = logging.getLogger(__name__)
+
+
 class SatelliteSimulation(BaseSimulation):
     def __init__(
         self,
@@ -35,6 +40,11 @@ class SatelliteSimulation(BaseSimulation):
 
         self.maneuvers = maneuvers or []
         self.executed_maneuvers = set()
+        logger.info(
+            "Initialized satellite simulation for %s with a %.3f s timestep",
+            satellite.name,
+            timestep_s,
+        )
 
     def step(self):
 
@@ -61,6 +71,12 @@ class SatelliteSimulation(BaseSimulation):
                     )
 
                     self.executed_maneuvers.add(index)
+                    logger.info(
+                        "Executed orbit-raise maneuver %s for %s at %.3f s",
+                        index,
+                        self.satellite.name,
+                        self.state.time_s,
+                    )
 
             elif isinstance(maneuver, StationKeepingManeuver):
                 self.satellite_state.altitude_m = station_keep(

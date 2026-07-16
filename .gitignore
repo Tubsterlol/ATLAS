@@ -74,6 +74,10 @@ exports/
 snapshots/
 telemetry/
 
+# ATLAS source exporters (the rule above is for generated simulation output)
+!analytics/exports/
+!analytics/exports/**/*.py
+
 # =========================================
 # Dataset Artifacts
 # =========================================
