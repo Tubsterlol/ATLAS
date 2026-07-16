@@ -3,6 +3,8 @@ from aerospace.aircraft.flight_conditions import (
     mach_number,
     reynolds_number,
 )
+from aerospace.aircraft.geometry_calculations import aspect_ratio
+from aerospace.aircraft.induced_drag import induced_drag_coefficient
 from aerospace.aircraft.lift import aircraft_lift
 from aerospace.aircraft.lift_curve import lift_coefficient
 from aerospace.aircraft.performance import (
@@ -52,6 +54,18 @@ class AircraftSimulation(BaseSimulation):
             self.aircraft_state.alpha_deg,
         )
 
+        ar = aspect_ratio(
+            wing_span_m=self.aircraft.geometry.wing_span_m,
+            wing_area_m2=self.aircraft.geometry.wing_area_m2,
+        )
+
+        cdi = induced_drag_coefficient(
+            lift_coefficient=cl,
+            aspect_ratio=ar,
+        )
+
+        total_cd = self.aircraft.drag_coefficient + cdi
+
         lift = aircraft_lift(
             density=density,
             velocity_ms=self.aircraft_state.velocity_ms,
@@ -62,7 +76,7 @@ class AircraftSimulation(BaseSimulation):
         drag = aircraft_drag(
             density=density,
             velocity_ms=self.aircraft_state.velocity_ms,
-            drag_coefficient=self.aircraft.drag_coefficient,
+            drag_coefficient=total_cd,
             reference_area_m2=self.aircraft.geometry.wing_area_m2,
         )
 
@@ -157,4 +171,7 @@ class AircraftSimulation(BaseSimulation):
             heading_deg=self.aircraft_state.heading_deg,
             alpha_deg=self.aircraft_state.alpha_deg,
             lift_coefficient=cl,
+            drag_coefficient=total_cd,
+            induced_drag_coefficient=cdi,
+            aspect_ratio=ar,
         )

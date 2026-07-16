@@ -8,9 +8,6 @@ def aircraft_drag(
     reference_area_m2: float,
 ) -> float:
 
-    return drag_force(
-        density=density,
-        velocity=velocity_ms,
-        drag_coefficient=drag_coefficient,
-        reference_area=reference_area_m2,
-    )
+    dynamic_pressure = 0.5 * density * velocity_ms**2
+
+    return dynamic_pressure * drag_coefficient * reference_area_m2
