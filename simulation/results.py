@@ -20,6 +20,7 @@ class AircraftResult:
     x_m: float
     y_m: float
     heading_deg: float
+    alpha_deg: float
 
 
 @dataclass

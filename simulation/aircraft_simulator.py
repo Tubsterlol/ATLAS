@@ -85,6 +85,8 @@ class AircraftSimulation(BaseSimulation):
 
         self.aircraft_state.velocity_ms += acceleration * self.state.timestep_s
 
+        alpha_deg = (self.aircraft_state.alpha_deg,)
+
         self.aircraft_state.velocity_ms = min(
             self.aircraft_state.velocity_ms,
             self.aircraft.max_speed_ms,
@@ -150,4 +152,5 @@ class AircraftSimulation(BaseSimulation):
             x_m=self.aircraft_state.x_m,
             y_m=self.aircraft_state.y_m,
             heading_deg=self.aircraft_state.heading_deg,
+            alpha_deg=self.aircraft_state.alpha_deg,
         )

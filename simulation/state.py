@@ -19,6 +19,7 @@ class AircraftState:
     x_m: float = 0.0
     y_m: float = 0.0
     heading_deg: float = 0.0
+    alpha_deg: float = 0.0
 
 
 @dataclass

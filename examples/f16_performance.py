@@ -21,8 +21,9 @@ mission = WaypointMission(
 state = AircraftState(
     altitude_m=0,
     velocity_ms=250,
-    fuel_kg=3000,
+    fuel_kg=f16.mass_kg * 0.2,
     climb_rate_ms=15,
+    alpha_deg=5.0,
 )
 
 simulation = AircraftSimulation(
