@@ -11,6 +11,9 @@ class BaseSimulation:
 
     def run_step_count(self, steps: int):
 
+        if not isinstance(steps, int) or isinstance(steps, bool) or steps < 0:
+            raise ValueError(f"steps must be a non-negative integer; got {steps!r}")
+
         results = []
 
         for _ in range(steps):

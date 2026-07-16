@@ -1,11 +1,22 @@
 from dataclasses import dataclass
 
+from aerospace.core.validation import (
+    require_in_range,
+    require_non_empty_string,
+    require_non_negative,
+    require_positive,
+)
+
 
 @dataclass
 class SimulationState:
     time_s: float = 0.0
     timestep_s: float = 1.0
     running: bool = True
+
+    def __post_init__(self) -> None:
+        require_non_negative(self.time_s, "time_s")
+        require_positive(self.timestep_s, "timestep_s")
 
 
 @dataclass
@@ -20,6 +31,12 @@ class AircraftState:
     y_m: float = 0.0
     heading_deg: float = 0.0
     alpha_deg: float = 0.0
+
+    def __post_init__(self) -> None:
+        require_non_negative(self.time_s, "time_s")
+        require_non_negative(self.altitude_m, "altitude_m")
+        require_non_negative(self.velocity_ms, "velocity_ms")
+        require_non_negative(self.fuel_kg, "fuel_kg")
 
 
 @dataclass
@@ -38,3 +55,15 @@ class SatelliteState:
     true_anomaly_deg: float = 0.0
     latitude_deg: float = 0.0
     longitude_deg: float = 0.0
+
+    def __post_init__(self) -> None:
+        require_non_empty_string(self.satellite_name, "satellite_name")
+        require_non_negative(self.time_s, "time_s")
+        require_non_negative(self.altitude_m, "altitude_m")
+        require_non_negative(self.velocity_ms, "velocity_ms")
+        require_in_range(self.inclination_deg, "inclination_deg", 0.0, 180.0)
+        if not 0.0 <= self.eccentricity < 1.0:
+            raise ValueError(
+                "eccentricity must be greater than or equal to 0.0 and less than 1.0; "
+                f"got {self.eccentricity}"
+            )
