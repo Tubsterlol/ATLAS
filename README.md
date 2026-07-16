@@ -153,6 +153,15 @@ python -m pytest -q
 
 The suite includes broad physics checks plus focused aircraft tests for aerodynamic equations, stall and wave-drag boundaries, trim, performance and geometry utilities, and simulation state updates.
 
+## Documentation
+
+- [Architecture](docs/architecture.md)
+- [Aircraft model](docs/aircraft-model.md)
+- [Satellite model](docs/satellite-model.md)
+- [Datasets](docs/datasets.md)
+- [Validation](docs/validation.md)
+- [Contributing](docs/contributing.md)
+
 ## Current model boundaries
 
 ATLAS favors transparent models over high-fidelity ones. In particular:
