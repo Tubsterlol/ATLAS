@@ -30,6 +30,8 @@ class AircraftResult:
     induced_drag_coefficient: float
     aspect_ratio: float
     wave_drag_coefficient: float
+    stall: bool
+    stall_margin: float
 
 
 @dataclass

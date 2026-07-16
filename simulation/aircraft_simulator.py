@@ -6,11 +6,11 @@ from aerospace.aircraft.flight_conditions import (
 from aerospace.aircraft.geometry_calculations import aspect_ratio
 from aerospace.aircraft.induced_drag import induced_drag_coefficient
 from aerospace.aircraft.lift import aircraft_lift
-from aerospace.aircraft.lift_curve import lift_coefficient
 from aerospace.aircraft.performance import (
     aircraft_thrust_to_weight,
     stall_speed,
 )
+from aerospace.aircraft.stall import lift_coefficient_with_stall
 from aerospace.aircraft.trim import trim_angle_of_attack
 from aerospace.aircraft.wave_drag import wave_drag_coefficient
 from aerospace.atmosphere.isa import (
@@ -61,7 +61,7 @@ class AircraftSimulation(BaseSimulation):
             wing_area_m2=self.aircraft.geometry.wing_area_m2,
         )
 
-        cl = lift_coefficient(
+        cl = lift_coefficient_with_stall(
             self.aircraft_state.alpha_deg,
         )
 
@@ -86,6 +86,8 @@ class AircraftSimulation(BaseSimulation):
 
         total_cd = self.aircraft.drag_coefficient + cdi + wave_cd
 
+        is_stalled = self.aircraft_state.alpha_deg >= 15.0
+
         lift = aircraft_lift(
             density=density,
             velocity_ms=self.aircraft_state.velocity_ms,
@@ -100,11 +102,13 @@ class AircraftSimulation(BaseSimulation):
             reference_area_m2=self.aircraft.geometry.wing_area_m2,
         )
 
-        stall = stall_speed(
+        stall_speed_ms = stall_speed(
             mass_kg=effective_mass,
             wing_area_m2=self.aircraft.geometry.wing_area_m2,
             lift_coefficient=cl,
         )
+
+        stall_margin = 15.0 - self.aircraft_state.alpha_deg
 
         twr = aircraft_thrust_to_weight(
             thrust_n=self.aircraft.thrust_n,
@@ -172,7 +176,7 @@ class AircraftSimulation(BaseSimulation):
             velocity_ms=self.aircraft_state.velocity_ms,
             lift_n=lift,
             drag_n=drag,
-            stall_speed_ms=stall,
+            stall_speed_ms=stall_speed_ms,
             thrust_to_weight=twr,
             mach=mach,
             reynolds_number=reynolds,
@@ -190,4 +194,6 @@ class AircraftSimulation(BaseSimulation):
             induced_drag_coefficient=cdi,
             aspect_ratio=ar,
             wave_drag_coefficient=wave_cd,
+            stall=is_stalled,
+            stall_margin=stall_margin,
         )
