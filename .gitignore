@@ -194,6 +194,12 @@ checkpoints/
 *.pth
 *.onnx
 
+# ATLAS source models (the rule above is for generated ML artifacts only)
+!aerospace/aircraft/models/
+!aerospace/aircraft/models/**/*.py
+!aerospace/satellite/models/
+!aerospace/satellite/models/**/*.py
+
 # =========================================
 # Future CFD/Scientific Compute Cache
 # =========================================
