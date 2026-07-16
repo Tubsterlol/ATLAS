@@ -1,9 +1,8 @@
-from aerospace.satellite.decay import simulate_decay_step
-from aerospace.satellite.satellite import Satellite
+from aerospace.satellite.models.satellite import Satellite
+from aerospace.satellite.perturbations.decay import simulate_decay_step
 
 
 def test_altitude_decay():
-
     satellite = Satellite(
         name="TestSat",
         mass_kg=500,
@@ -12,8 +11,15 @@ def test_altitude_decay():
         altitude_m=400_000,
     )
 
-    initial_altitude = satellite.altitude_m
+    result = simulate_decay_step(
+        altitude_m=satellite.altitude_m,
+        mass_kg=satellite.mass_kg,
+        drag_coefficient=satellite.drag_coefficient,
+        cross_sectional_area_m2=satellite.cross_sectional_area_m2,
+        timestep_s=10,
+    )
 
-    simulate_decay_step(satellite, timestep_s=10)
-
-    assert satellite.altitude_m < initial_altitude
+    assert result["altitude_m"] < satellite.altitude_m
+    assert result["velocity_ms"] > 0
+    assert result["drag_force_n"] > 0
+    assert result["decay_rate"] > 0

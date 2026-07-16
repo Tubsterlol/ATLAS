@@ -1,8 +1,8 @@
 import csv
 
-from aerospace.aircraft.aircraft import Aircraft
-from aerospace.aircraft.geometry import AircraftGeometry
-from aerospace.aircraft.geometry_calculations import aspect_ratio
+from aerospace.aircraft.geometry.geometry import AircraftGeometry
+from aerospace.aircraft.geometry.geometry_calculations import aspect_ratio
+from aerospace.aircraft.models.aircraft import Aircraft
 
 
 def load_aircraft_dataset(filepath: str):

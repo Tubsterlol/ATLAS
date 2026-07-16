@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
-from aerospace.aircraft.geometry_calculations import aspect_ratio
-from aerospace.aircraft.induced_drag import induced_drag_coefficient
-from aerospace.aircraft.wave_drag import wave_drag_coefficient
+from aerospace.aircraft.aerodynamics.induced_drag import induced_drag_coefficient
+from aerospace.aircraft.aerodynamics.wave_drag import wave_drag_coefficient
+from aerospace.aircraft.geometry.geometry_calculations import aspect_ratio
 
 
 @dataclass

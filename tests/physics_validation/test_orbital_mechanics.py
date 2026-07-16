@@ -1,4 +1,4 @@
-from aerospace.satellite.orbit import orbital_velocity
+from aerospace.satellite.orbit.vis_viva import orbital_velocity
 
 
 def test_leo_orbital_velocity():

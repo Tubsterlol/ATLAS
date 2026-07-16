@@ -1,18 +1,18 @@
-from aerospace.aircraft.drag import aircraft_drag
-from aerospace.aircraft.flight_conditions import (
+from aerospace.aircraft.aerodynamics.drag import aircraft_drag
+from aerospace.aircraft.aerodynamics.induced_drag import induced_drag_coefficient
+from aerospace.aircraft.aerodynamics.lift import aircraft_lift
+from aerospace.aircraft.aerodynamics.stall import lift_coefficient_with_stall
+from aerospace.aircraft.aerodynamics.trim import trim_angle_of_attack
+from aerospace.aircraft.aerodynamics.wave_drag import wave_drag_coefficient
+from aerospace.aircraft.geometry.geometry_calculations import aspect_ratio
+from aerospace.aircraft.performance.flight_conditions import (
     mach_number,
     reynolds_number,
 )
-from aerospace.aircraft.geometry_calculations import aspect_ratio
-from aerospace.aircraft.induced_drag import induced_drag_coefficient
-from aerospace.aircraft.lift import aircraft_lift
-from aerospace.aircraft.performance import (
+from aerospace.aircraft.performance.performance import (
     aircraft_thrust_to_weight,
     stall_speed,
 )
-from aerospace.aircraft.stall import lift_coefficient_with_stall
-from aerospace.aircraft.trim import trim_angle_of_attack
-from aerospace.aircraft.wave_drag import wave_drag_coefficient
 from aerospace.atmosphere.isa import (
     isa_density,
     isa_temperature,

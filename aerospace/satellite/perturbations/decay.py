@@ -1,5 +1,5 @@
-from aerospace.satellite.drag import satellite_drag_force
-from aerospace.satellite.orbit import orbital_velocity
+from aerospace.satellite.orbit.vis_viva import orbital_velocity
+from aerospace.satellite.perturbations.drag import satellite_drag_force
 
 
 def altitude_decay_rate(

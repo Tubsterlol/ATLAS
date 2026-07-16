@@ -1,8 +1,8 @@
-from aerospace.satellite.decay import simulate_decay_step
-from aerospace.satellite.groundtrack import groundtrack_position
-from aerospace.satellite.maneuvers import orbit_raise
-from aerospace.satellite.orbital_motion import advance_true_anomaly
-from aerospace.satellite.orbital_parameters import (
+from aerospace.satellite.perturbations.decay import simulate_decay_step
+from aerospace.satellite.orbit.groundtrack import groundtrack_position
+from aerospace.satellite.maneuvers.maneuvers import orbit_raise
+from aerospace.satellite.orbit.orbital_motion import advance_true_anomaly
+from aerospace.satellite.orbit.orbital_parameters import (
     apoapsis,
     orbital_energy,
     orbital_period,

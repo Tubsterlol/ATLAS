@@ -1,4 +1,4 @@
-from aerospace.aircraft.aircraft import Aircraft
+from aerospace.aircraft.models.aircraft import Aircraft
 
 BOEING_737 = Aircraft(
     name="737-800",

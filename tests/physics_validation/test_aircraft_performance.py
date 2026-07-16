@@ -1,4 +1,4 @@
-from aerospace.aircraft.performance import stall_speed
+from aerospace.aircraft.performance.performance import stall_speed
 
 
 def test_stall_speed():

@@ -1,6 +1,6 @@
 import csv
 
-from aerospace.satellite.satellite import Satellite
+from aerospace.satellite.models.satellite import Satellite
 
 
 def load_satellite_dataset(filepath: str):

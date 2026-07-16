@@ -1,4 +1,4 @@
-from aerospace.aircraft.aircraft import Aircraft
+from aerospace.aircraft.models.aircraft import Aircraft
 from simulation.aircraft_simulator import AircraftSimulation
 
 aircraft = Aircraft(

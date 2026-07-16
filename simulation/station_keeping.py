@@ -1,4 +1,4 @@
-from aerospace.satellite.maneuvers import orbit_raise
+from aerospace.satellite.maneuvers.maneuvers import orbit_raise
 
 
 def station_keep(

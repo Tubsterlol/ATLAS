@@ -1,4 +1,4 @@
-from aerospace.satellite.orbital_parameters import (
+from aerospace.satellite.orbit.orbital_parameters import (
     orbital_energy,
     orbital_period,
     semi_major_axis,
