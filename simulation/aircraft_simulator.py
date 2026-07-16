@@ -4,6 +4,7 @@ from aerospace.aircraft.flight_conditions import (
     reynolds_number,
 )
 from aerospace.aircraft.lift import aircraft_lift
+from aerospace.aircraft.lift_curve import lift_coefficient
 from aerospace.aircraft.performance import (
     aircraft_thrust_to_weight,
     stall_speed,
@@ -47,11 +48,15 @@ class AircraftSimulation(BaseSimulation):
 
         effective_mass = self.aircraft.mass_kg + self.aircraft_state.fuel_kg
 
+        cl = lift_coefficient(
+            self.aircraft_state.alpha_deg,
+        )
+
         lift = aircraft_lift(
             density=density,
             velocity_ms=self.aircraft_state.velocity_ms,
-            lift_coefficient=self.aircraft.lift_coefficient,
             wing_area_m2=self.aircraft.geometry.wing_area_m2,
+            lift_coefficient=cl,
         )
 
         drag = aircraft_drag(
@@ -64,7 +69,7 @@ class AircraftSimulation(BaseSimulation):
         stall = stall_speed(
             mass_kg=effective_mass,
             wing_area_m2=self.aircraft.geometry.wing_area_m2,
-            lift_coefficient=self.aircraft.lift_coefficient,
+            lift_coefficient=cl,
         )
 
         twr = aircraft_thrust_to_weight(
@@ -85,8 +90,6 @@ class AircraftSimulation(BaseSimulation):
 
         self.aircraft_state.velocity_ms += acceleration * self.state.timestep_s
 
-        alpha_deg = (self.aircraft_state.alpha_deg,)
-
         self.aircraft_state.velocity_ms = min(
             self.aircraft_state.velocity_ms,
             self.aircraft.max_speed_ms,
@@ -100,7 +103,7 @@ class AircraftSimulation(BaseSimulation):
         reynolds = reynolds_number(
             density=density,
             velocity_ms=self.aircraft_state.velocity_ms,
-            characteristic_length_m=self.aircraft.geometry.wing_span_m,
+            characteristic_length_m=self.aircraft.geometry.mean_chord_m,
         )
 
         fuel_used = self.aircraft.fuel_burn_kg_s * self.state.timestep_s
@@ -153,4 +156,5 @@ class AircraftSimulation(BaseSimulation):
             y_m=self.aircraft_state.y_m,
             heading_deg=self.aircraft_state.heading_deg,
             alpha_deg=self.aircraft_state.alpha_deg,
+            lift_coefficient=cl,
         )

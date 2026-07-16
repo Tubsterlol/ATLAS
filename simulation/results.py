@@ -21,6 +21,7 @@ class AircraftResult:
     y_m: float
     heading_deg: float
     alpha_deg: float
+    lift_coefficient: float
 
 
 @dataclass

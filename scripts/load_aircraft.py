@@ -30,7 +30,6 @@ def load_aircraft_dataset(filepath: str):
                 manufacturer=row["manufacturer"],
                 mass_kg=float(row["mass_kg"]),
                 drag_coefficient=float(row["drag_coefficient"]),
-                lift_coefficient=float(row["lift_coefficient"]),
                 thrust_n=float(row["thrust_n"]),
                 max_speed_ms=float(row["max_speed_ms"]),
                 fuel_burn_kg_s=float(row["fuel_burn_kg_s"]),
