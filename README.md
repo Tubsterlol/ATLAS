@@ -1,144 +1,173 @@
 # ATLAS
 
-ATLAS is a modular aerospace simulation framework for modeling aircraft and satellite dynamics. It combines aerodynamic, atmospheric, and orbital physics with time-stepped simulation systems to support engineering analysis, education, and research.
+**ATLAS** is a Python framework for exploring aircraft performance and low-Earth-orbit satellite dynamics. It combines reusable aerospace calculations with small, time-stepped simulation engines, scenario runners, sample datasets, and export utilities.
 
-The project provides reusable physics models, simulation runtimes, mission profiles, scenario execution, and analytics tools for studying aerospace systems under realistic operating conditions.
+It is intended for engineering education, prototyping, and experimentation. The models are deliberately approachable; ATLAS is not a flight-certified or mission-certified analysis tool.
 
----
+## What it can simulate
 
-## Features
+### Aircraft
 
-### Aircraft Simulation
+- ISA temperature and density at the simulated altitude
+- Lift, parasite drag, induced drag, wave drag, stall, trim, Mach number, and Reynolds number
+- Thrust-driven acceleration, fuel burn, climb/descent, and two-dimensional position updates
+- Flight profiles, mission phases, and waypoint steering
 
-ATLAS includes a physics-based aircraft performance simulator capable of modeling:
+### Satellites
 
-* Lift generation
-* Aerodynamic drag
-* Stall speed estimation
-* Thrust-to-weight ratio
-* Mach number calculation
-* Reynolds number calculation
-* ISA atmosphere modeling
-* Fuel consumption and effective mass tracking
-* Altitude and climb rate simulation
-* Position and heading tracking
-* Mission profile support
-* Time-stepped flight simulation
+- Circular-orbit velocity, period, specific orbital energy, and semi-major axis
+- Simplified atmospheric drag and altitude-decay propagation
+- Ground-track latitude/longitude from inclination and true anomaly
+- Orbit-raise and station-keeping maneuvers
+- Multiple simulations through `ConstellationSimulation`
 
-### Satellite Simulation
+## Repository layout
 
-ATLAS includes orbital and atmospheric models for Low Earth Orbit (LEO) satellites:
+```text
+aerospace/       Reusable aircraft, satellite, atmosphere, physics, and navigation models
+simulation/      State objects, time stepping, simulators, profiles, maneuvers, and scenarios
+analytics/       CSV/JSON export and plotting helpers
+datasets/        Aircraft and satellite CSV datasets used by the examples
+examples/        Runnable simulations and orbital-parameter demonstrations
+tests/           Physics validation and aircraft unit/integration-style tests
+```
 
-* Orbital velocity calculation
-* Atmospheric density modeling
-* Satellite drag force calculation
-* Orbital altitude tracking
-* Orbital decay estimation
-* Time-stepped propagation
-* Satellite state management
+## Quick start
 
-### Atmosphere & Physics
+ATLAS currently has no runtime third-party dependency. Python 3.10+ is recommended.
 
-Shared physics modules provide:
+```bash
+git clone <repository-url>
+cd ATLAS
 
-* International Standard Atmosphere (ISA)
-* Atmospheric density models
-* Orbital density models
-* Gravity calculations
-* Aerodynamic force equations
-* Orbital mechanics utilities
-* Aerospace constants and unit systems
+# Optional but recommended
+python -m venv .venv
+source .venv/bin/activate
 
-### Analytics
+# Needed to run the tests
+python -m pip install pytest
+```
 
-Simulation outputs can be exported and analyzed through:
+Run an aircraft scenario from the repository root:
 
-* CSV export
-* JSON export
-* Performance graphs
-* Decay graphs
-* Simulation result logging
+```bash
+python examples/scenario_demo.py
+```
 
-### Scenario System
+This loads the F-16 from `datasets/aircraft/military.csv`, simulates 1,000 one-second steps, and prints the first and last `AircraftResult`.
 
-ATLAS supports reusable simulation scenarios:
+For a quick orbital calculation:
 
-* Aircraft scenarios
-* Satellite scenarios
-* Mission profiles
-* Batch simulation execution
+```bash
+python examples/iss_orbital_parameters.py
+```
 
----
+## Using the library
 
-## Applications
+The aircraft simulator takes an `Aircraft` definition plus a mutable `AircraftState`. Each call to `step()` advances the state and returns a record containing the quantities calculated during that step.
 
-* Aerospace engineering education
-* Aircraft performance analysis
-* Satellite mission analysis
-* Orbital lifetime estimation
-* Flight profile evaluation
-* Physics-based simulation studies
-* Research and experimentation
+```python
+from aerospace.aircraft.geometry.geometry import AircraftGeometry
+from aerospace.aircraft.models.aircraft import Aircraft
+from simulation.aircraft_simulator import AircraftSimulation
+from simulation.state import AircraftState
 
----
+aircraft = Aircraft(
+    name="Demo aircraft",
+    manufacturer="ATLAS",
+    mass_kg=2_000,
+    drag_coefficient=0.02,
+    thrust_n=20_000,
+    max_speed_ms=300,
+    fuel_burn_kg_s=0.5,
+    geometry=AircraftGeometry(
+        wing_span_m=15.0,
+        wing_area_m2=25.0,
+        mean_chord_m=2.0,
+        taper_ratio=0.5,
+        sweep_deg=20.0,
+        fuselage_length_m=12.0,
+        fuselage_diameter_m=1.5,
+        horizontal_tail_area_m2=5.0,
+        vertical_tail_area_m2=3.0,
+    ),
+)
 
-## Current Aircraft Capabilities
+state = AircraftState(
+    altitude_m=1_000,
+    velocity_ms=100,
+    fuel_kg=100,
+    climb_rate_ms=5,
+    heading_deg=90,
+)
 
-* Lift calculation
-* Drag calculation
-* Stall speed estimation
-* Thrust-to-weight ratio
-* Mach number
-* Reynolds number
-* ISA atmosphere integration
-* Fuel burn simulation
-* Effective mass calculation
-* Altitude propagation
-* Position tracking
-* Heading tracking
-* Mission profile execution
+simulation = AircraftSimulation(aircraft, state, timestep_s=1.0)
+results = simulation.run_step_count(60)
 
----
+print(results[-1].altitude_m)
+print(results[-1].velocity_ms)
+```
 
-## Current Satellite Capabilities
+For dataset-driven runs, use `simulation.scenario_runner.run_aircraft_scenario` or `run_satellite_scenario`. See [scenario_demo.py](examples/scenario_demo.py), [f16_performance.py](examples/f16_performance.py), and [iss_simulation.py](examples/iss_simulation.py).
 
-* Orbital velocity calculation
-* Atmospheric drag modeling
-* Orbital decay simulation
-* Altitude propagation
-* Time-stepped orbital simulation
+## Results and exports
 
----
+`AircraftSimulation` produces `AircraftResult` objects, including time, altitude, speed, forces, atmosphere, fuel, position, angle of attack, drag breakdown, and stall status. `SatelliteSimulation` returns equivalent `SatelliteResult` orbital and decay fields.
 
-## Project Goals
+Export result lists with:
 
-### Near-Term
+```python
+from analytics.exports.csv_exporter import export_csv
+from analytics.exports.json_exporter import export_json
 
-* Aircraft flight envelopes
-* Autopilot systems
-* Waypoint navigation
-* Orbital element propagation
-* Ground track generation
-* Satellite maneuver modeling
+export_csv(results, "outputs/run.csv")
+export_json(results, "outputs/run.json")
+```
 
-### Long-Term
+The `outputs/` directory is included for generated files. Exporters expect their destination directory to exist.
 
-* Unified aerospace simulation engine
-* Advanced atmospheric models
-* Multi-vehicle simulations
-* Visualization tools
-* High-performance Rust simulation runtime
+## Dataset formats
 
----
+Aircraft datasets contain the vehicle properties and planform/geometry values consumed by `scripts.load_aircraft_dataset`:
 
-## Output
+```text
+name, manufacturer, mass_kg, drag_coefficient, thrust_n, max_speed_ms,
+fuel_burn_kg_s, wing_span_m, wing_area_m2, mean_chord_m, sweep_deg,
+taper_ratio, fuselage_length_m, fuselage_diameter_m,
+horizontal_tail_area_m2, vertical_tail_area_m2
+```
 
-ATLAS generates structured simulation data that can be exported for further analysis and visualization.
+Satellite datasets are read by `scripts.load_satellite_dataset`:
 
-Example outputs include:
+```text
+name, mass_kg, cross_sectional_area_m2, drag_coefficient, altitude_m
+```
 
-* Aircraft performance datasets
-* Fuel consumption profiles
-* Flight trajectory data
-* Satellite decay datasets
-* Orbital propagation results
+## Testing
+
+Run the full suite from the repository root:
+
+```bash
+python -m pytest -q
+```
+
+The suite includes broad physics checks plus focused aircraft tests for aerodynamic equations, stall and wave-drag boundaries, trim, performance and geometry utilities, and simulation state updates.
+
+## Current model boundaries
+
+ATLAS favors transparent models over high-fidelity ones. In particular:
+
+- The aircraft engine is a point-mass, time-stepped performance model; it does not solve full six-degree-of-freedom rigid-body dynamics or include a detailed propulsion model.
+- The ISA implementation uses a single temperature lapse-rate formulation, not the full multi-layer standard atmosphere.
+- Satellite propagation assumes circular-orbit quantities and uses a simplified drag-to-altitude-decay relationship. It does not model a full perturbation environment, Earth rotation in longitude, or ephemeris-grade orbital propagation.
+- API, database, and terminal UI directories are present as scaffolding and are not yet product-facing interfaces.
+
+These limitations make the code suitable for teaching, experiments, and extension work, but results should be independently validated before any operational use.
+
+## Next directions
+
+Useful extensions include full flight-envelope and autopilot support, richer atmospheric and orbital perturbation models, orbital-element propagation, visualization, and a production API/UI layer.
+
+## License
+
+See [LICENSE](LICENSE).
