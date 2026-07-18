@@ -4,6 +4,7 @@ from aerospace.aircraft.geometry.geometry import AircraftGeometry
 from aerospace.aircraft.models.aircraft import Aircraft
 from simulation.aircraft_simulator import AircraftSimulation
 from simulation.flight_profiles import CruiseProfile
+from simulation.mission_phase import MissionPhase
 from simulation.state import AircraftState
 
 
@@ -64,13 +65,15 @@ def test_step_respects_speed_and_fuel_lower_bounds():
 
 
 def test_profile_updates_state_before_the_aircraft_is_propagated():
-    state = AircraftState(altitude_m=1_000.0, velocity_ms=100.0, fuel_kg=50.0, climb_rate_ms=10.0)
+    state = AircraftState(
+        altitude_m=1_000.0, velocity_ms=100.0, fuel_kg=50.0, climb_rate_ms=10.0
+    )
     simulation = AircraftSimulation(
         make_aircraft(), state, profile=CruiseProfile(), timestep_s=5.0
     )
 
     result = simulation.step()
 
-    assert result.phase == "climb"
+    assert result.phase == MissionPhase.CLIMB
     assert state.climb_rate_ms == 0.0
     assert result.altitude_m == pytest.approx(1_000.0)

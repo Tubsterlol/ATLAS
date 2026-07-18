@@ -6,6 +6,7 @@ from aerospace.core.validation import (
     require_non_negative,
     require_positive,
 )
+from simulation.mission_phase import MissionPhase
 
 
 @dataclass
@@ -26,7 +27,7 @@ class AircraftState:
     velocity_ms: float = 0.0
     fuel_kg: float = 0.0
     climb_rate_ms: float = 0.0
-    phase: str = "climb"
+    phase: MissionPhase = MissionPhase.CLIMB
     x_m: float = 0.0
     y_m: float = 0.0
     heading_deg: float = 0.0
