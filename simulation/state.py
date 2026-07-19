@@ -32,6 +32,10 @@ class AircraftState:
     y_m: float = 0.0
     heading_deg: float = 0.0
     alpha_deg: float = 0.0
+    gear_up: bool = False
+    flaps_deg: float = 15.0
+    spoilers_deployed: bool = False
+    parking_brake: bool = True
 
     def __post_init__(self) -> None:
         require_non_negative(self.time_s, "time_s")
