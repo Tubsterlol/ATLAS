@@ -5,11 +5,9 @@
 # =========================================
 # Python
 # =========================================
-__pycache__/
+**/__pycache__/
 *.py[cod]
 *$py.class
-
-# Compiled Extensions
 *.so
 
 # =========================================
@@ -26,22 +24,18 @@ ENV/
 build/
 dist/
 downloads/
-eggs/
 .eggs/
-lib/
-lib64/
-parts/
-sdist/
-share/python-wheels/
 *.egg-info/
-.installed.cfg
 *.egg
+.installed.cfg
+pip-wheel-metadata/
 
 # =========================================
 # Testing / Coverage
 # =========================================
 .pytest_cache/
 .coverage
+.coverage.*
 coverage.xml
 htmlcov/
 
@@ -50,8 +44,9 @@ htmlcov/
 # =========================================
 .mypy_cache/
 .ruff_cache/
-.dmypy.json
 .pyre/
+.pytype/
+.dmypy.json
 
 # =========================================
 # Logs
@@ -60,7 +55,7 @@ logs/
 *.log
 
 # =========================================
-# Benchmarks Output
+# Benchmark Outputs
 # =========================================
 benchmarks/output/
 benchmarks/results/
@@ -73,25 +68,31 @@ results/
 exports/
 snapshots/
 telemetry/
+recordings/
 
-# ATLAS source exporters (the rule above is for generated simulation output)
+# Generated analytics
+analytics/exports/generated/
+analytics/graphs/generated/
+
+# Keep source exporters
 !analytics/exports/
 !analytics/exports/**/*.py
 
 # =========================================
-# Dataset Artifacts
+# Datasets
 # =========================================
+
+# Temporary dataset artifacts
 datasets/raw/
 datasets/cache/
 datasets/tmp/
 
-# Large datasets
-*.csv
+# Future scientific formats
 *.parquet
 *.feather
 *.h5
 
-# Keep placeholder dirs
+# Keep dataset directories
 !datasets/**/.gitkeep
 
 # =========================================
@@ -100,10 +101,9 @@ datasets/tmp/
 *.db
 *.sqlite3
 
-# PostgreSQL local data
 postgres_data/
+pgdata/
 
-# Alembic cache
 alembic/__pycache__/
 
 # =========================================
@@ -118,15 +118,17 @@ alembic/__pycache__/
 # =========================================
 .docker/
 docker-compose.override.yml
+docker-volumes/
 
 # =========================================
 # IDEs / Editors
 # =========================================
 
-# VSCode
+# VS Code
 .vscode/
+!.vscode/extensions.json
 
-# PyCharm / IntelliJ
+# JetBrains
 .idea/
 
 # Vim
@@ -137,18 +139,12 @@ docker-compose.override.yml
 *~
 
 # =========================================
-# OS Files
+# Operating System
 # =========================================
-
-# Linux
-.Trash-*
-
-# macOS
 .DS_Store
-
-# Windows
 Thumbs.db
 Desktop.ini
+.Trash-*
 
 # =========================================
 # Jupyter
@@ -161,6 +157,8 @@ Desktop.ini
 tmp/
 temp/
 *.tmp
+*.bak
+*.orig
 
 # =========================================
 # Textual
@@ -168,20 +166,9 @@ temp/
 .textual_cache/
 
 # =========================================
-# API Runtime
+# FastAPI / Uvicorn
 # =========================================
 uvicorn.log
-
-# =========================================
-# Analytics / Graph Exports
-# =========================================
-analytics/exports/generated/
-analytics/graphs/generated/
-
-# =========================================
-# Simulation Recordings
-# =========================================
-recordings/
 
 # =========================================
 # Binary Files
@@ -190,29 +177,30 @@ recordings/
 *.dat
 
 # =========================================
-# Future ML/AI Extensions
+# ML / AI (Future)
 # =========================================
-models/
+ml_models/
 checkpoints/
+
 *.pt
 *.pth
 *.onnx
 
-# ATLAS source models (the rule above is for generated ML artifacts only)
+# Keep ATLAS source models
 !aerospace/aircraft/models/
 !aerospace/aircraft/models/**/*.py
 !aerospace/satellite/models/
 !aerospace/satellite/models/**/*.py
 
 # =========================================
-# Future CFD/Scientific Compute Cache
+# Scientific Computing Cache
 # =========================================
 cache/
 .scipy/
 .numpy/
 
 # =========================================
-# Secrets / Keys
+# Secrets
 # =========================================
 *.pem
 *.key
@@ -220,7 +208,7 @@ cache/
 secrets/
 
 # =========================================
-# Future Frontend Builds
+# Frontend (Future)
 # =========================================
 node_modules/
 .next/
@@ -228,6 +216,6 @@ out/
 dist-frontend/
 
 # =========================================
-# Keep Empty Structure
+# Keep Empty Directories
 # =========================================
 !.gitkeep
