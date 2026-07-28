@@ -1,14 +1,19 @@
 from abc import ABC, abstractmethod
 
-from mission_profile import MissionPhase
+from .mission_phase import MissionPhase
 
 
 class MissionEvent(ABC):
-    @abstractmethod
-    def check(self, state) -> bool: ...
+    def __init__(self):
+        self.completed = False
 
     @abstractmethod
-    def execute(self, state): ...
+    def check(self, state) -> bool:
+        pass
+
+    @abstractmethod
+    def execute(self, state):
+        pass
 
 
 class GearUpEvent(MissionEvent):
@@ -26,7 +31,11 @@ class GearUpEvent(MissionEvent):
 
 class FlapsRetractEvent(MissionEvent):
     def check(self, state):
-        return not self.completed and state.velocity_ms >= 90.0 and state.flaps_deg > 0
+        return (
+            not self.completed
+            and state.velocity_ms >= 90.0
+            and state.flaps_deg > 0.0
+        )
 
     def execute(self, state):
         state.flaps_deg = 0.0

@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+
+  atlas:
+
+    build: .
+
+    container_name: atlas
+
+    working_dir: /app
+
+    volumes:
+      - .:/app
+
+    stdin_open: true
+    tty: true
+
+    command: bash

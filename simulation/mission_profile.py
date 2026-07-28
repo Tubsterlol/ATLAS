@@ -1,13 +1,17 @@
-from mission_events import FlapsRetractEvent, GearUpEvent
+from .mission_events import (
+    FlapsRetractEvent,
+    GearUpEvent,
+)
 
-from simulation.flight_profiles import (
+from .flight_profiles import (
     ClimbProfile,
     CruiseProfile,
     DescentProfile,
     LandingProfile,
     TakeoffProfile,
 )
-from simulation.mission_phase import MissionPhase
+
+from .mission_phase import MissionPhase
 
 
 class MissionProfile:
@@ -20,7 +24,19 @@ class MissionProfile:
         takeoff_transition_altitude_m: float = 150.0,
         landing_transition_altitude_m: float = 1000.0,
     ):
-        ...
+        self.cruise_altitude_m = cruise_altitude_m
+        self.reserve_fuel_kg = reserve_fuel_kg
+
+        self.takeoff_transition_altitude_m = (
+            takeoff_transition_altitude_m
+        )
+
+        self.landing_transition_altitude_m = (
+            landing_transition_altitude_m
+        )
+
+        self.current_phase = MissionPhase.TAKEOFF
+
         self.phase_profiles = {
             MissionPhase.TAKEOFF: TakeoffProfile(),
             MissionPhase.CLIMB: ClimbProfile(climb_rate_ms),
@@ -33,22 +49,6 @@ class MissionProfile:
             GearUpEvent(),
             FlapsRetractEvent(),
         ]
-        self.cruise_altitude_m = cruise_altitude_m
-        self.reserve_fuel_kg = reserve_fuel_kg
-
-        self.takeoff_transition_altitude_m = takeoff_transition_altitude_m
-
-        self.landing_transition_altitude_m = landing_transition_altitude_m
-
-        self.current_phase = MissionPhase.TAKEOFF
-
-        self.phase_profiles = {
-            MissionPhase.TAKEOFF: TakeoffProfile(),
-            MissionPhase.CLIMB: ClimbProfile(climb_rate_ms),
-            MissionPhase.CRUISE: CruiseProfile(),
-            MissionPhase.DESCENT: DescentProfile(descent_rate_ms),
-            MissionPhase.LANDING: LandingProfile(),
-        }
 
     def set_phase(
         self,
@@ -103,6 +103,7 @@ class MissionProfile:
         state,
     ):
         self.transition(state)
+
         profile = self.phase_profiles[self.current_phase]
         profile.update(state)
 

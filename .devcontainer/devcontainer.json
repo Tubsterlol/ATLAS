@@ -1,0 +1,26 @@
+{
+    "name": "ATLAS",
+
+    "dockerComposeFile": "../docker-compose.yml",
+
+    "service": "atlas",
+
+    "workspaceFolder": "/app",
+
+    "customizations": {
+
+        "vscode": {
+
+            "extensions": [
+
+                "ms-python.python",
+
+                "ms-python.vscode-pylance",
+
+                "charliermarsh.ruff",
+
+                "ms-toolsai.jupyter"
+            ]
+        }
+    }
+}
