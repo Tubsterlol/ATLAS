@@ -18,7 +18,9 @@
 ## Before opening a change
 
 ```bash
-pytest -q
+python -m pip install .
+python -m pip install pytest
+python -m pytest -q
 ```
 
 Review generated output and keep data artifacts, caches, and local environment files out of version control.

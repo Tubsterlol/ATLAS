@@ -34,7 +34,9 @@ tests/           Physics validation and aircraft unit/integration-style tests
 
 ## Quick start
 
-ATLAS currently has no runtime third-party dependency. Python 3.10+ is recommended.
+ATLAS can be used directly on your host machine or inside the provided Docker container. Python 3.10+ is recommended for local runs; the Docker workflow uses Python 3.14 via the image defined in the Dockerfile.
+
+### Local Python setup
 
 ```bash
 git clone <repository-url>
@@ -44,8 +46,8 @@ cd ATLAS
 python -m venv .venv
 source .venv/bin/activate
 
-# Needed to run the tests
-python -m pip install pytest
+# Install the project and its runtime dependencies
+python -m pip install .
 ```
 
 Run an aircraft scenario from the repository root:
@@ -61,6 +63,33 @@ For a quick orbital calculation:
 ```bash
 python examples/iss_orbital_parameters.py
 ```
+
+To run the F-22 performance example and write a CSV to the outputs directory:
+
+```bash
+python examples/f22_performance.py
+```
+
+### Docker Compose workflow
+
+The repository includes a simple Compose service named `atlas` in `docker-compose.yml`. It builds the image from the local Dockerfile, mounts the repository into `/app`, and starts an interactive shell by default.
+
+```bash
+docker compose build atlas
+docker compose run --rm atlas
+```
+
+From inside the container, you can run the examples or tests directly:
+
+```bash
+python -m pip install .
+python examples/scenario_demo.py
+python examples/iss_orbital_parameters.py
+python examples/f22_performance.py
+pytest -q
+```
+
+Because the project root is bind-mounted into `/app`, changes made on the host are available immediately inside the container.
 
 ## Using the library
 
@@ -128,7 +157,7 @@ The `outputs/` directory is included for generated files. Exporters expect their
 
 ## Dataset formats
 
-Aircraft datasets contain the vehicle properties and planform/geometry values consumed by `scripts.load_aircraft_dataset`:
+Aircraft datasets contain the vehicle properties and planform/geometry values consumed by `load_aircraft_dataset` from [scripts/load_aircraft.py](scripts/load_aircraft.py):
 
 ```text
 name, manufacturer, mass_kg, drag_coefficient, thrust_n, max_speed_ms,
@@ -137,7 +166,7 @@ taper_ratio, fuselage_length_m, fuselage_diameter_m,
 horizontal_tail_area_m2, vertical_tail_area_m2
 ```
 
-Satellite datasets are read by `scripts.load_satellite_dataset`:
+Satellite datasets are read by `load_satellite_dataset` from [scripts/load_satellites.py](scripts/load_satellites.py):
 
 ```text
 name, mass_kg, cross_sectional_area_m2, drag_coefficient, altitude_m
@@ -145,9 +174,11 @@ name, mass_kg, cross_sectional_area_m2, drag_coefficient, altitude_m
 
 ## Testing
 
-Run the full suite from the repository root:
+Install the package and test dependencies first, then run the full suite from the repository root:
 
 ```bash
+python -m pip install .
+python -m pip install pytest
 python -m pytest -q
 ```
 
