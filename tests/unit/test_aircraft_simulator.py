@@ -77,3 +77,39 @@ def test_profile_updates_state_before_the_aircraft_is_propagated():
     assert result.phase == MissionPhase.CLIMB
     assert state.climb_rate_ms == 0.0
     assert result.altitude_m == pytest.approx(1_000.0)
+
+
+@pytest.fixture
+def simulation():
+    state = AircraftState(
+        altitude_m=1_000.0,
+        velocity_ms=100.0,
+        fuel_kg=100.0,
+        climb_rate_ms=5.0,
+        heading_deg=90.0,
+    )
+    return AircraftSimulation(make_aircraft(), state, timestep_s=1.0)
+
+
+def test_step_records_telemetry(simulation):
+    simulation.step()
+
+    assert len(simulation.telemetry) == 1
+
+    record = simulation.telemetry.records[0]
+
+    assert record.time_s == simulation.state.time_s
+    assert record.altitude_m == simulation.aircraft_state.altitude_m
+    assert record.velocity_ms == simulation.aircraft_state.velocity_ms
+    assert record.fuel_kg == simulation.aircraft_state.fuel_kg
+    assert record.phase == simulation.aircraft_state.phase
+
+
+def test_multiple_steps_record_multiple_telemetry_entries(simulation):
+    simulation.step()
+    simulation.step()
+    simulation.step()
+
+    assert len(simulation.telemetry) == 3
+
+    assert simulation.telemetry.records[-1].time_s == simulation.state.time_s
