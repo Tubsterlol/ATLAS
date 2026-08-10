@@ -1,9 +1,12 @@
 from abc import ABC, abstractmethod
 
-from mission_profile import MissionPhase
+from .mission_phase import MissionPhase
 
 
 class MissionEvent(ABC):
+    def __init__(self):
+        self.completed = False
+
     @abstractmethod
     def check(self, state) -> bool: ...
 

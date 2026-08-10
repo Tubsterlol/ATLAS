@@ -1,5 +1,3 @@
-from mission_events import FlapsRetractEvent, GearUpEvent
-
 from simulation.flight_profiles import (
     ClimbProfile,
     CruiseProfile,
@@ -7,7 +5,9 @@ from simulation.flight_profiles import (
     LandingProfile,
     TakeoffProfile,
 )
-from simulation.mission_phase import MissionPhase
+
+from .mission_events import FlapsRetractEvent, GearUpEvent
+from .mission_phase import MissionPhase
 
 
 class MissionProfile:
