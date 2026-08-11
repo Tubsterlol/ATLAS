@@ -26,8 +26,8 @@ from aerospace.physics.constants import (
 from simulation.base import BaseSimulation
 from simulation.results import AircraftResult
 from simulation.state import AircraftState
+from simulation.telemetry import TelemetryRecorder
 from simulation.timestep import advance_time
-
 
 logger = logging.getLogger(__name__)
 
@@ -45,6 +45,7 @@ class AircraftSimulation(BaseSimulation):
         self.aircraft = aircraft
         self.aircraft_state = initial_state
         self.profile = profile
+        self.telemetry = TelemetryRecorder()
         logger.info(
             "Initialized aircraft simulation for %s with a %.3f s timestep",
             aircraft.name,
@@ -186,6 +187,8 @@ class AircraftSimulation(BaseSimulation):
             heading_deg=self.aircraft_state.heading_deg,
             timestep_s=self.state.timestep_s,
         )
+
+        self.telemetry.record(self.aircraft_state)
 
         return AircraftResult(
             time_s=self.state.time_s,

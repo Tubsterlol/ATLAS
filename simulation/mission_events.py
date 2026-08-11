@@ -8,12 +8,10 @@ class MissionEvent(ABC):
         self.completed = False
 
     @abstractmethod
-    def check(self, state) -> bool:
-        pass
+    def check(self, state) -> bool: ...
 
     @abstractmethod
-    def execute(self, state):
-        pass
+    def execute(self, state): ...
 
 
 class GearUpEvent(MissionEvent):
@@ -31,11 +29,7 @@ class GearUpEvent(MissionEvent):
 
 class FlapsRetractEvent(MissionEvent):
     def check(self, state):
-        return (
-            not self.completed
-            and state.velocity_ms >= 90.0
-            and state.flaps_deg > 0.0
-        )
+        return not self.completed and state.velocity_ms >= 90.0 and state.flaps_deg > 0
 
     def execute(self, state):
         state.flaps_deg = 0.0
