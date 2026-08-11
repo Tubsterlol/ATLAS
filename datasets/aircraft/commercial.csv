@@ -1,0 +1,3 @@
+name ,manufacturer,mass_kg,wing_area_m2,wingspan_m,drag_coefficient,lift_coffecient,thrust_n,speed_ms
+737-800,Boeing,79015,124.6,35.8,0.024,1.5,242000,230
+A320,Airbus,77000,122.6,35.8,0.023,1.5,240000,230
