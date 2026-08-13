@@ -5,7 +5,10 @@ from aerospace.aircraft.models.aircraft import Aircraft
 from simulation.aircraft_simulator import AircraftSimulation
 from simulation.flight_profiles import CruiseProfile
 from simulation.mission_phase import MissionPhase
+from simulation.mission_profile import MissionProfile
 from simulation.state import AircraftState
+from simulation.waypoint import Waypoint
+from simulation.waypoint_mission import WaypointMission
 
 
 def make_aircraft():
@@ -77,6 +80,33 @@ def test_profile_updates_state_before_the_aircraft_is_propagated():
     assert result.phase == MissionPhase.CLIMB
     assert state.climb_rate_ms == 0.0
     assert result.altitude_m == pytest.approx(1_000.0)
+
+
+def test_heading_is_normalized_to_360_range():
+    state = AircraftState(
+        altitude_m=1_000.0,
+        velocity_ms=100.0,
+        fuel_kg=50.0,
+        climb_rate_ms=10.0,
+        heading_deg=0.0,
+    )
+    simulation = AircraftSimulation(
+        make_aircraft(),
+        state,
+        profile=MissionProfile(
+            cruise_altitude_m=10_000.0,
+            climb_rate_ms=15.0,
+            descent_rate_ms=8.0,
+            reserve_fuel_kg=500.0,
+            navigation=WaypointMission([Waypoint("WP1", -1_000.0, 0.0)]),
+        ),
+        timestep_s=1.0,
+    )
+
+    simulation.step()
+
+    assert 0.0 <= state.heading_deg < 360.0
+    assert state.heading_deg == pytest.approx(270.0)
 
 
 @pytest.fixture

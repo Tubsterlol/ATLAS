@@ -3,6 +3,7 @@ from scripts.load_satellites import load_satellite_dataset
 from simulation.constellation_simulation import (
     ConstellationSimulation,
 )
+from simulation.satellite_mission_profile import SatelliteMissionProfile
 from simulation.satellite_simulator import (
     SatelliteSimulation,
 )
@@ -23,6 +24,7 @@ simulations = [
             inclination_deg=51.6,
             eccentricity=0.0007,
         ),
+        profile=SatelliteMissionProfile(),
         timestep_s=60,
     ),
     SatelliteSimulation(
@@ -33,6 +35,7 @@ simulations = [
             inclination_deg=53.0,
             eccentricity=0.0001,
         ),
+        profile=SatelliteMissionProfile(),
         timestep_s=60,
     ),
     SatelliteSimulation(
@@ -43,6 +46,7 @@ simulations = [
             inclination_deg=97.6,
             eccentricity=0.001,
         ),
+        profile=SatelliteMissionProfile(),
         timestep_s=60,
     ),
 ]

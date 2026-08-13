@@ -36,12 +36,14 @@ class AircraftSimulation(BaseSimulation):
     def __init__(
         self,
         aircraft,
-        initial_state: AircraftState,
+        initial_state,
         profile=None,
-        timestep_s: float = 1.0,
+        navigation=None,
+        timestep_s=1.0,
     ):
         super().__init__(timestep_s)
 
+        self.navigation = navigation
         self.aircraft = aircraft
         self.aircraft_state = initial_state
         self.profile = profile
@@ -56,6 +58,21 @@ class AircraftSimulation(BaseSimulation):
 
         if self.profile:
             self.profile.update(self.aircraft_state)
+
+        if self.state.time_s % 100 == 0:
+            print(
+                f"time={self.state.time_s:.0f}s "
+                f"altitude={self.aircraft_state.altitude_m:.1f}m "
+                f"climb_rate={self.aircraft_state.climb_rate_ms:.2f}m/s "
+                f"phase={self.aircraft_state.phase}"
+            )
+
+        # A MissionProfile may own navigation. Do not run that component twice.
+        profile_navigation = getattr(self.profile, "navigation", None)
+        if self.navigation and profile_navigation is None:
+            self.navigation.update(self.aircraft_state)
+
+        self.aircraft_state.heading_deg %= 360.0
 
         density = isa_density(self.aircraft_state.altitude_m)
 

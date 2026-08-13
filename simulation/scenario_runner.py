@@ -1,6 +1,7 @@
 from scripts.load_aircraft import load_aircraft_dataset
 from scripts.load_satellites import load_satellite_dataset
 from simulation.aircraft_simulator import AircraftSimulation
+from simulation.satellite_mission_profile import SatelliteMissionProfile
 from simulation.satellite_simulator import SatelliteSimulation
 from simulation.scenarios import (
     AircraftScenario,
@@ -60,7 +61,9 @@ def run_satellite_scenario(
     simulation = SatelliteSimulation(
         satellite=satellite,
         initial_state=state,
-        maneuvers=scenario.maneuvers,
+        profile=scenario.profile or SatelliteMissionProfile(
+            maneuvers=scenario.maneuvers,
+        ),
         timestep_s=scenario.timestep_s,
     )
 
