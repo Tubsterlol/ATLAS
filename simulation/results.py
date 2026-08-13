@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from aerospace.aircraft.aerodynamics.induced_drag import induced_drag_coefficient
 from aerospace.aircraft.aerodynamics.wave_drag import wave_drag_coefficient
 from aerospace.aircraft.geometry.geometry_calculations import aspect_ratio
+from simulation.satellite_mission_phase import SatelliteMissionPhase
 
 
 @dataclass
@@ -40,6 +41,7 @@ class SatelliteResult:
     time_s: float
     altitude_m: float
     velocity_ms: float
+    phase: SatelliteMissionPhase
     drag_force_n: float
     decay_rate: float
     orbital_period_s: float

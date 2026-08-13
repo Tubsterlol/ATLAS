@@ -72,6 +72,8 @@ class AircraftSimulation(BaseSimulation):
         if self.navigation and profile_navigation is None:
             self.navigation.update(self.aircraft_state)
 
+        self.aircraft_state.heading_deg %= 360.0
+
         density = isa_density(self.aircraft_state.altitude_m)
 
         temperature = isa_temperature(self.aircraft_state.altitude_m)

@@ -7,6 +7,7 @@ from aerospace.core.validation import (
     require_positive,
 )
 from simulation.mission_phase import MissionPhase
+from simulation.satellite_mission_phase import SatelliteMissionPhase
 
 
 @dataclass
@@ -50,6 +51,7 @@ class SatelliteState:
     time_s: float = 0.0
     altitude_m: float = 0.0
     velocity_ms: float = 0.0
+    phase: SatelliteMissionPhase = SatelliteMissionPhase.COAST
     inclination_deg: float = 0.0
     eccentricity: float = 0.0
     semi_major_axis_m: float = 0.0

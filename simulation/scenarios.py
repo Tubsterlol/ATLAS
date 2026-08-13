@@ -19,6 +19,7 @@ class SatelliteScenario:
     duration_hours: float
     timestep_s: float = 60.0
     maneuvers: list = field(default_factory=list)
+    profile: object | None = None
 
     def __post_init__(self) -> None:
         require_non_empty_string(self.name, "name")

@@ -1,6 +1,7 @@
 from analytics.exports.csv_exporter import export_csv
 from scripts.load_satellites import load_satellite_dataset
 from simulation.maneuvers import StationKeepingManeuver
+from simulation.satellite_mission_profile import SatelliteMissionProfile
 from simulation.satellite_simulator import SatelliteSimulation
 from simulation.state import SatelliteState
 
@@ -26,7 +27,7 @@ maneuvers = [
 simulation = SatelliteSimulation(
     satellite=iss,
     initial_state=state,
-    maneuvers=maneuvers,
+    profile=SatelliteMissionProfile(maneuvers=maneuvers),
     timestep_s=60,
 )
 

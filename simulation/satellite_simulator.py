@@ -2,7 +2,6 @@ import logging
 
 from aerospace.satellite.perturbations.decay import simulate_decay_step
 from aerospace.satellite.orbit.groundtrack import groundtrack_position
-from aerospace.satellite.maneuvers.maneuvers import orbit_raise
 from aerospace.satellite.orbit.orbital_motion import advance_true_anomaly
 from aerospace.satellite.orbit.orbital_parameters import (
     apoapsis,
@@ -12,13 +11,9 @@ from aerospace.satellite.orbit.orbital_parameters import (
     semi_major_axis,
 )
 from simulation.base import BaseSimulation
-from simulation.maneuvers import (
-    OrbitRaiseManeuver,
-    StationKeepingManeuver,
-)
+from simulation.satellite_mission_profile import SatelliteMissionProfile
 from simulation.results import SatelliteResult
 from simulation.state import SatelliteState
-from simulation.station_keeping import station_keep
 from simulation.timestep import advance_time
 
 
@@ -30,6 +25,7 @@ class SatelliteSimulation(BaseSimulation):
         self,
         satellite,
         initial_state: SatelliteState,
+        profile=None,
         maneuvers=None,
         timestep_s: float = 1.0,
     ):
@@ -38,8 +34,7 @@ class SatelliteSimulation(BaseSimulation):
         self.satellite = satellite
         self.satellite_state = initial_state
 
-        self.maneuvers = maneuvers or []
-        self.executed_maneuvers = set()
+        self.profile = profile or SatelliteMissionProfile(maneuvers=maneuvers)
         logger.info(
             "Initialized satellite simulation for %s with a %.3f s timestep",
             satellite.name,
@@ -47,7 +42,7 @@ class SatelliteSimulation(BaseSimulation):
         )
 
     def step(self):
-
+        self.profile.update(self.satellite_state)
         result = simulate_decay_step(
             altitude_m=self.satellite_state.altitude_m,
             mass_kg=self.satellite.mass_kg,
@@ -58,32 +53,6 @@ class SatelliteSimulation(BaseSimulation):
 
         self.satellite_state.altitude_m = result["altitude_m"]
         self.satellite_state.velocity_ms = result["velocity_ms"]
-
-        for index, maneuver in enumerate(self.maneuvers):
-            if isinstance(maneuver, OrbitRaiseManeuver):
-                if (
-                    index not in self.executed_maneuvers
-                    and self.state.time_s >= maneuver.time_s
-                ):
-                    self.satellite_state.altitude_m = orbit_raise(
-                        altitude_m=self.satellite_state.altitude_m,
-                        delta_v_ms=maneuver.delta_v_ms,
-                    )
-
-                    self.executed_maneuvers.add(index)
-                    logger.info(
-                        "Executed orbit-raise maneuver %s for %s at %.3f s",
-                        index,
-                        self.satellite.name,
-                        self.state.time_s,
-                    )
-
-            elif isinstance(maneuver, StationKeepingManeuver):
-                self.satellite_state.altitude_m = station_keep(
-                    current_altitude_m=self.satellite_state.altitude_m,
-                    target_altitude_m=maneuver.target_altitude_m,
-                    tolerance_m=maneuver.tolerance_m,
-                )
 
         self.state.time_s = advance_time(
             self.state.time_s,
@@ -113,6 +82,10 @@ class SatelliteSimulation(BaseSimulation):
         peri = periapsis(altitude)
 
         self.satellite_state.semi_major_axis_m = axis
+        self.satellite_state.orbital_period_s = period
+        self.satellite_state.orbital_energy_j_kg = energy
+        self.satellite_state.apoapsis_m = apo
+        self.satellite_state.periapsis_m = peri
         self.satellite_state.latitude_deg = latitude_deg
         self.satellite_state.longitude_deg = longitude_deg
 
@@ -121,6 +94,7 @@ class SatelliteSimulation(BaseSimulation):
             time_s=self.state.time_s,
             altitude_m=altitude,
             velocity_ms=self.satellite_state.velocity_ms,
+            phase=self.satellite_state.phase,
             drag_force_n=result["drag_force_n"],
             decay_rate=result["decay_rate"],
             orbital_period_s=period,
