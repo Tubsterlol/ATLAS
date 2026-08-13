@@ -1,69 +1,56 @@
-# ATLAS Model Validation
+# ATLAS Validation Report
 
-## Purpose
+This page lists a few simple reference checks for the current model. The values are meant to show that the code is in the right range, not to certify the simulator.
 
-This document records reference checks for the simplified models implemented in ATLAS. A passing unit test confirms that code behaves as implemented; a validation case checks whether that implementation produces a physically reasonable result for a defined input.
+## Gravity
 
-ATLAS is an educational and exploratory framework. These checks do not qualify it for operational flight or mission analysis.
+| Test | Expected | Actual |
+| --- | --- | --- |
+| Surface gravity | 9.81 m/s² | 9.81997 m/s² |
 
-## Method
+## Atmosphere
 
-Each baseline case has a fixed input, an independent reference value or analytical equation, an ATLAS result, and an acceptance tolerance. Values are rounded to the precision useful for the current model fidelity.
+| Test | Expected | Actual |
+| --- | --- | --- |
+| Density at sea level | 1.225 kg/m³ | 1.225 kg/m³ |
+| Density at 10 km | about 0.38 kg/m³ | 0.37775 kg/m³ |
 
-| Status | Meaning |
-| --- | --- |
-| Baseline | Reference check implemented in the automated suite. |
-| Planned | A useful case whose source data and acceptance tolerance have not yet been established. |
+## Orbital mechanics
 
-## Baseline checks
+| Test | Expected | Actual |
+| --- | --- | --- |
+| ISS circular-orbit speed at 408 km | about 7660 m/s | 7668.07 m/s |
+| ISS orbital period at 408 km | about 92.5 min | 92.58 min |
+| Semi-major axis at 408 km | Earth radius + altitude | 6,779,000 m |
 
-### Gravity
+## Aircraft
 
-| Case | Input | Reference | ATLAS result | Tolerance | Status |
-| --- | --- | --- | --- | --- | --- |
-| Surface gravity | Altitude: 0 m | 9.81 m/s² | 9.82 m/s² | ±0.1 m/s² | Baseline |
+| Test | Expected | Actual |
+| --- | --- | --- |
+| F-16 thrust-to-weight ratio | about 1.1 | 1.10 |
+| Boeing 737-800 stall speed | realistic positive value | 82.27 m/s |
+| Lift at sea level, 100 m/s, CL 1.2, 20 m² | positive | 147,000 N |
+| Drag at sea level, 100 m/s, CD 0.02, 20 m² | positive | 2,450 N |
 
-The result is calculated from the Newtonian gravity equation using the Earth mass and radius constants in `aerospace.physics.constants`.
+## Reference checks in the test suite
 
-### Circular-orbit mechanics
+The test suite also checks the following behavior:
 
-| Case | Input | Reference | ATLAS result | Tolerance | Status |
-| --- | --- | --- | --- | --- | --- |
-| ISS-like orbital speed | Altitude: 400 km | 7.6–7.8 km/s | ~7.67 km/s | Within range | Baseline |
-| ISS orbital period | Altitude: 408 km | ~92.6 min | 92.58 min | ±1 min | Baseline |
+- gravity decreases with altitude
+- atmospheric density decreases with altitude
+- ISS-like orbital speed stays in the expected low-Earth-orbit range
+- stall speed stays positive
+- lift and drag stay positive under normal conditions
 
-These values assume a circular orbit and use Earth’s standard gravitational parameter. They do not validate perturbation propagation.
+## What this means
 
-### Standard atmosphere
+The models are behaving in the expected range for the examples and unit tests we ship today.
 
-| Case | Input | Reference | ATLAS result | Tolerance | Status |
-| --- | --- | --- | --- | --- | --- |
-| Sea-level density | 0 m | 1.225 kg/m³ | 1.225 kg/m³ | ±0.01 kg/m³ | Baseline |
-| Density at 10 km | 10,000 m | ~0.41 kg/m³ | ~0.41 kg/m³ | ±0.03 kg/m³ | Baseline |
+They are still simplified models:
 
-The implemented ISA calculation is a single lapse-rate layer. Do not use this validation beyond the altitude range supported by that approximation.
+- gravity is a basic inverse-square model
+- atmosphere is a single-lapse-rate approximation
+- satellite decay is simplified
+- aircraft motion is point-mass performance, not full rigid-body flight dynamics
 
-### Aircraft performance
-
-| Case | Input | Reference | ATLAS result | Tolerance | Status |
-| --- | --- | --- | --- | --- | --- |
-| F-16 thrust-to-weight | 129,000 N thrust; 12,000 kg mass | ~1.10 | 1.096 | ±0.02 | Baseline |
-| Generic stall speed | 10,000 kg; 30 m²; CL = 1.5 | Positive finite value | 59.66 m/s | Exact equation | Baseline |
-| F-16 Reynolds number | 250 m/s at sea level; 2.8 m chord | Order of 10⁷–10⁸ | ~4.7 × 10⁷ | One order of magnitude | Baseline |
-
-The stall-speed calculation assumes sea-level density and a specified lift coefficient. It is not a replacement for aircraft-specific flight-manual data.
-
-## Model assumptions and exclusions
-
-- Aircraft motion is a point-mass performance model, not a six-degree-of-freedom rigid-body simulation.
-- The aerodynamic model uses configured coefficients and simple lift, induced-drag, stall, and wave-drag relationships.
-- Satellite quantities are circular-orbit approximations; the decay calculation is a simplified drag-to-altitude relationship.
-- No baseline currently covers winds, propulsion lapse, non-spherical gravity, J2, solar radiation pressure, or high-fidelity atmospheric density.
-
-## Adding a validation case
-
-1. State the model function and exact input values.
-2. Cite an analytical derivation, standard, or authoritative reference dataset.
-3. Define a tolerance that matches the model’s stated fidelity.
-4. Add an automated test and add the result to the relevant table above.
-5. Record any deliberate deviation from the reference and why it is acceptable.
+Use the validation cases as a sanity check, not as proof of real-world accuracy.

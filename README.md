@@ -17,7 +17,7 @@ It is intended for engineering education, prototyping, and experimentation. The 
 
 - Circular-orbit velocity, period, specific orbital energy, and semi-major axis
 - Simplified atmospheric drag and altitude-decay propagation
-- Ground-track latitude/longitude from inclination and true anomaly
+- Ground-track latitude and longitude from inclination and true anomaly
 - Orbit-raise and station-keeping maneuvers
 - Multiple simulations through `ConstellationSimulation`
 
@@ -29,7 +29,7 @@ simulation/      State objects, time stepping, simulators, profiles, maneuvers, 
 analytics/       CSV/JSON export and plotting helpers
 datasets/        Aircraft and satellite CSV datasets used by the examples
 examples/        Runnable simulations and orbital-parameter demonstrations
-tests/           Physics validation and aircraft unit/integration-style tests
+tests/           Physics validation and aircraft/satellite unit tests
 ```
 
 ## Quick start
@@ -182,7 +182,7 @@ python -m pip install pytest
 python -m pytest -q
 ```
 
-The suite includes broad physics checks plus focused aircraft tests for aerodynamic equations, stall and wave-drag boundaries, trim, performance and geometry utilities, and simulation state updates.
+The suite includes physics checks plus focused aircraft and satellite tests for mission profiles, aerodynamics, decay, maneuver handling, and simulation state updates.
 
 ## Documentation
 
@@ -200,6 +200,7 @@ ATLAS favors transparent models over high-fidelity ones. In particular:
 - The aircraft engine is a point-mass, time-stepped performance model; it does not solve full six-degree-of-freedom rigid-body dynamics or include a detailed propulsion model.
 - The ISA implementation uses a single temperature lapse-rate formulation, not the full multi-layer standard atmosphere.
 - Satellite propagation assumes circular-orbit quantities and uses a simplified drag-to-altitude-decay relationship. It does not model a full perturbation environment, Earth rotation in longitude, or ephemeris-grade orbital propagation.
+- Mission profiles own the control policy for aircraft and satellites. The simulators apply physics and advance time.
 - API, database, and terminal UI directories are present as scaffolding and are not yet product-facing interfaces.
 
 These limitations make the code suitable for teaching, experiments, and extension work, but results should be independently validated before any operational use.
