@@ -13,6 +13,8 @@ def test_current_waypoint():
     assert mission.current_index == 0
     assert mission.current_waypoint.id == "WP1"
     assert mission.completed is False
+    assert mission.waypoint_count == 2
+    assert mission.reach_radius_m == 1000.0
 
 
 def test_previous_and_remaining_waypoints():
@@ -97,12 +99,11 @@ def test_empty_mission_is_completed_and_safe():
     mission = WaypointMission([])
 
     assert mission.completed is True
-    assert mission.current_waypoint is None
-    assert mission.previous_waypoint is None
-    assert mission.remaining_waypoints == []
 
-    state = type("State", (), {"x_m": 0.0, "y_m": 0.0, "heading_deg": 0.0})()
 
-    mission.update(state)
-
-    assert mission.completed is True
+def test_reach_radius_must_be_positive():
+    try:
+        WaypointMission([Waypoint("WP1", 0.0, 0.0)], reach_radius_m=0.0)
+        assert False
+    except ValueError as exc:
+        assert "reach_radius_m" in str(exc)

@@ -1,11 +1,19 @@
 import math
 
+from aerospace.core.validation import require_positive
+
 
 class WaypointMission:
     def __init__(self, waypoints, reach_radius_m: float = 1000.0):
-        self.waypoints = waypoints
+        require_positive(reach_radius_m, "reach_radius_m")
+
+        self.waypoints = list(waypoints)
         self.reach_radius_m = reach_radius_m
         self.current_index = 0
+
+    @property
+    def waypoint_count(self) -> int:
+        return len(self.waypoints)
 
     @property
     def completed(self) -> bool:
@@ -53,3 +61,6 @@ class WaypointMission:
             return
 
         state.heading_deg = math.degrees(math.atan2(dx, dy))
+
+
+__all__ = ["WaypointMission"]
