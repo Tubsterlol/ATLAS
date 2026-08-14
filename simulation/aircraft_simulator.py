@@ -59,14 +59,6 @@ class AircraftSimulation(BaseSimulation):
         if self.profile:
             self.profile.update(self.aircraft_state)
 
-        if self.state.time_s % 100 == 0:
-            print(
-                f"time={self.state.time_s:.0f}s "
-                f"altitude={self.aircraft_state.altitude_m:.1f}m "
-                f"climb_rate={self.aircraft_state.climb_rate_ms:.2f}m/s "
-                f"phase={self.aircraft_state.phase}"
-            )
-
         # A MissionProfile may own navigation. Do not run that component twice.
         profile_navigation = getattr(self.profile, "navigation", None)
         if self.navigation and profile_navigation is None:
