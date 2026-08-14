@@ -1,3 +1,5 @@
+import pytest
+
 from simulation.waypoint import Waypoint
 from simulation.waypoint_mission import WaypointMission
 
@@ -102,8 +104,7 @@ def test_empty_mission_is_completed_and_safe():
 
 
 def test_reach_radius_must_be_positive():
-    try:
+    with pytest.raises(ValueError) as excinfo:
         WaypointMission([Waypoint("WP1", 0.0, 0.0)], reach_radius_m=0.0)
-        assert False
-    except ValueError as exc:
-        assert "reach_radius_m" in str(exc)
+
+    assert "reach_radius_m" in str(excinfo.value)

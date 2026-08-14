@@ -1,3 +1,5 @@
+import pytest
+
 from simulation.navigation import NavigationCalculator, Waypoint
 
 
@@ -20,11 +22,8 @@ def test_waypoint_is_immutable():
         altitude_m=5000.0,
     )
 
-    try:
+    with pytest.raises(AttributeError):
         waypoint.altitude_m = 6000.0
-        assert False
-    except AttributeError:
-        pass
 
 
 def test_distance_to_waypoint():

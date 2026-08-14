@@ -1,3 +1,5 @@
+import pytest
+
 from simulation.mission_evaluator import MissionEvaluator
 from simulation.mission_phase import MissionPhase
 from simulation.telemetry import TelemetryRecord
@@ -6,11 +8,10 @@ from simulation.telemetry import TelemetryRecord
 def test_evaluator_rejects_empty_telemetry():
     evaluator = MissionEvaluator()
 
-    try:
+    with pytest.raises(ValueError) as excinfo:
         evaluator.evaluate([])
-        assert False
-    except ValueError as exc:
-        assert str(exc) == "Cannot evaluate mission without telemetry"
+
+    assert str(excinfo.value) == "Cannot evaluate mission without telemetry"
 
 
 def test_evaluator_calculates_mission_result():

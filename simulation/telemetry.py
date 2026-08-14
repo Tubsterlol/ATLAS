@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 
 from simulation.mission_phase import MissionPhase
+from analytics.exports import export_csv, export_json
+from pathlib import Path
 
 
 @dataclass
@@ -38,3 +40,11 @@ class TelemetryRecorder:
 
     def __len__(self):
         return len(self.records)
+
+    def export_csv(self, filepath: str | Path) -> None:
+        """Export recorded telemetry to CSV using analytics.exports.export_csv."""
+        export_csv(self.records, filepath)
+
+    def export_json(self, filepath: str | Path) -> None:
+        """Export recorded telemetry to JSON using analytics.exports.export_json."""
+        export_json(self.records, filepath)
