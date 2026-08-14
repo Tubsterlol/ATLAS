@@ -7,6 +7,7 @@ from simulation import (
     MissionProfile,
     MissionResult,
     TelemetryRecord,
+    WaypointMission,
 )
 
 
@@ -19,3 +20,4 @@ def test_simulation_package_exports():
     assert MissionResult is not None
     assert MissionPhase is not None
     assert TelemetryRecord is not None
+    assert WaypointMission is not None

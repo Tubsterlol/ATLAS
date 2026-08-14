@@ -10,3 +10,6 @@ class Waypoint:
     @property
     def id(self) -> str:
         return self.name
+
+
+__all__ = ["Waypoint"]
