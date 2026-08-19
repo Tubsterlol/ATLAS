@@ -3,7 +3,6 @@ import pandas as pd
 
 
 def plot_lift(csv_file: str):
-
     df = pd.read_csv(csv_file)
 
     plt.figure(figsize=(10, 5))

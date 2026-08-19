@@ -3,7 +3,6 @@ def advance_true_anomaly(
     orbital_period_s: float,
     timestep_s: float,
 ) -> float:
-
     if orbital_period_s <= 0:
         return true_anomaly_deg
 

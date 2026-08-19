@@ -47,4 +47,6 @@ def load_satellite_dataset(filepath: str | Path) -> dict[str, Satellite]:
                 satellites[satellite.name] = satellite
             return satellites
     except csv.Error as error:
-        raise ValueError(f"Satellite dataset is not valid CSV: {path}: {error}") from error
+        raise ValueError(
+            f"Satellite dataset is not valid CSV: {path}: {error}"
+        ) from error

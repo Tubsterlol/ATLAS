@@ -19,17 +19,17 @@ def geometry():
     ],
 )
 def test_geometry_rejects_non_physical_values(field, value, message):
-    values = dict(
-        wing_span_m=15.0,
-        wing_area_m2=25.0,
-        mean_chord_m=2.0,
-        taper_ratio=0.5,
-        sweep_deg=20.0,
-        fuselage_length_m=12.0,
-        fuselage_diameter_m=1.5,
-        horizontal_tail_area_m2=5.0,
-        vertical_tail_area_m2=3.0,
-    )
+    values = {
+        "wing_span_m": 15.0,
+        "wing_area_m2": 25.0,
+        "mean_chord_m": 2.0,
+        "taper_ratio": 0.5,
+        "sweep_deg": 20.0,
+        "fuselage_length_m": 12.0,
+        "fuselage_diameter_m": 1.5,
+        "horizontal_tail_area_m2": 5.0,
+        "vertical_tail_area_m2": 3.0,
+    }
     values[field] = value
 
     with pytest.raises(ValueError, match=message):

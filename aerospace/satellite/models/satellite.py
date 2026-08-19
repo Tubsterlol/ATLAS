@@ -6,6 +6,7 @@ from aerospace.core.validation import (
     require_positive,
 )
 
+
 @dataclass
 class Satellite:
     name: str

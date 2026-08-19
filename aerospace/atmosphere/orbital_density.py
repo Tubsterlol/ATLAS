@@ -1,5 +1,4 @@
 def orbital_density(altitude_m: float) -> float:
-
     altitude_km = altitude_m / 1000
 
     if altitude_km < 150:

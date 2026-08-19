@@ -54,7 +54,6 @@ class AircraftSimulation(BaseSimulation):
         )
 
     def step(self):
-
         if self.profile:
             self.profile.update(self.aircraft_state)
 

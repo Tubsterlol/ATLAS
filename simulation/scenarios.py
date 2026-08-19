@@ -28,7 +28,9 @@ class SatelliteScenario:
         require_non_negative(self.initial_velocity_ms, "initial_velocity_ms")
         require_in_range(self.inclination_deg, "inclination_deg", 0.0, 180.0)
         if not 0.0 <= self.eccentricity < 1.0:
-            raise ValueError("eccentricity must be greater than or equal to 0.0 and less than 1.0")
+            raise ValueError(
+                "eccentricity must be greater than or equal to 0.0 and less than 1.0"
+            )
         require_positive(self.duration_hours, "duration_hours")
         require_positive(self.timestep_s, "timestep_s")
 

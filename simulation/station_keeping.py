@@ -6,7 +6,6 @@ def station_keep(
     target_altitude_m: float,
     tolerance_m: float,
 ) -> float:
-
     if current_altitude_m >= target_altitude_m - tolerance_m:
         return current_altitude_m
 

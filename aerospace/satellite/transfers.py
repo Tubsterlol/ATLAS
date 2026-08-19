@@ -10,7 +10,6 @@ def hohmann_delta_v1(
     altitude1_m: float,
     altitude2_m: float,
 ) -> float:
-
     r1 = EARTH_RADIUS_M + altitude1_m
     r2 = EARTH_RADIUS_M + altitude2_m
 
@@ -23,7 +22,6 @@ def hohmann_delta_v2(
     altitude1_m: float,
     altitude2_m: float,
 ) -> float:
-
     r1 = EARTH_RADIUS_M + altitude1_m
     r2 = EARTH_RADIUS_M + altitude2_m
 
@@ -36,7 +34,6 @@ def hohmann_transfer_time(
     altitude1_m: float,
     altitude2_m: float,
 ) -> float:
-
     r1 = EARTH_RADIUS_M + altitude1_m
     r2 = EARTH_RADIUS_M + altitude2_m
 

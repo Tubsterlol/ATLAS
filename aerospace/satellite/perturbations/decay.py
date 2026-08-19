@@ -7,7 +7,6 @@ def altitude_decay_rate(
     drag_force_n: float,
     velocity_ms: float,
 ) -> float:
-
     return drag_force_n / mass_kg
 
 
@@ -16,7 +15,6 @@ def update_altitude(
     decay_rate: float,
     timestep_s: float,
 ) -> float:
-
     altitude_loss = 0.5 * decay_rate * timestep_s**2
 
     return altitude_m - altitude_loss
@@ -29,7 +27,6 @@ def simulate_decay_step(
     cross_sectional_area_m2: float,
     timestep_s: float,
 ):
-
     velocity = orbital_velocity(altitude_m)
 
     drag = satellite_drag_force(

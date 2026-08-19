@@ -5,7 +5,6 @@ def groundtrack_position(
     true_anomaly_deg: float,
     inclination_deg: float,
 ):
-
     anomaly_rad = radians(true_anomaly_deg)
 
     inclination_rad = radians(inclination_deg)

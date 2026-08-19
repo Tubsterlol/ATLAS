@@ -11,5 +11,4 @@ class CruiseProfile(FlightProfile):
         self.cruise_speed_ms = cruise_speed_ms
 
     def update(self, state):
-
         state.climb_rate_ms = 0.0

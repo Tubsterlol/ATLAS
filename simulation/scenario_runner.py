@@ -61,7 +61,8 @@ def run_satellite_scenario(
     simulation = SatelliteSimulation(
         satellite=satellite,
         initial_state=state,
-        profile=scenario.profile or SatelliteMissionProfile(
+        profile=scenario.profile
+        or SatelliteMissionProfile(
             maneuvers=scenario.maneuvers,
         ),
         timestep_s=scenario.timestep_s,

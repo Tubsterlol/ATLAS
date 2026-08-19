@@ -9,7 +9,6 @@ from aerospace.physics.constants import (
 
 
 def atmospheric_pressure(altitude_m: float) -> float:
-
     lapse_rate = 0.0065
 
     return SEA_LEVEL_PRESSURE * (

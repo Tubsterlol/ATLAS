@@ -59,12 +59,15 @@ def test_stall_model_reduces_lift_after_critical_angle():
 
 
 def test_trim_angle_returns_zero_without_dynamic_pressure():
-    assert trim_angle_of_attack(
-        required_lift_n=10_000.0,
-        density=1.225,
-        velocity_ms=0.0,
-        wing_area_m2=20.0,
-    ) == 0.0
+    assert (
+        trim_angle_of_attack(
+            required_lift_n=10_000.0,
+            density=1.225,
+            velocity_ms=0.0,
+            wing_area_m2=20.0,
+        )
+        == 0.0
+    )
 
 
 def test_trim_angle_recreates_requested_lift_coefficient():

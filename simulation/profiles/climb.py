@@ -11,7 +11,6 @@ class ClimbProfile(FlightProfile):
         self.climb_rate_ms = climb_rate_ms
 
     def update(self, state):
-
         if state.altitude_m < self.target_altitude_m:
             state.climb_rate_ms = self.climb_rate_ms
         else:

@@ -22,7 +22,9 @@ def export_csv(results, filepath: str | Path) -> None:
 
 def _serialize_results(results) -> list[dict]:
     if results is None:
-        raise ValueError("results must be an iterable of dataclass result records; got None")
+        raise ValueError(
+            "results must be an iterable of dataclass result records; got None"
+        )
 
     rows = []
     for index, result in enumerate(results):

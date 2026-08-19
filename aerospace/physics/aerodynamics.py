@@ -3,7 +3,6 @@
 
 
 def dynamic_pressure(density: float, velocity: float) -> float:
-
     return 0.5 * density * (velocity**2)
 
 
@@ -14,7 +13,6 @@ def dynamic_pressure(density: float, velocity: float) -> float:
 def lift_force(
     density: float, velocity: float, lift_coefficient: float, wing_area: float
 ) -> float:
-
     return 0.5 * density * (velocity**2) * lift_coefficient * wing_area
 
 
@@ -25,7 +23,6 @@ def lift_force(
 def drag_force(
     density: float, velocity: float, drag_coefficient: float, reference_area: float
 ) -> float:
-
     return 0.5 * density * (velocity**2) * drag_coefficient * reference_area
 
 
@@ -34,7 +31,6 @@ def drag_force(
 
 
 def wing_loading(weight: float, wing_area: float) -> float:
-
     return weight / wing_area
 
 
@@ -43,5 +39,4 @@ def wing_loading(weight: float, wing_area: float) -> float:
 
 
 def thrust_to_weight_ratio(thrust: float, weight: float) -> float:
-
     return thrust / weight

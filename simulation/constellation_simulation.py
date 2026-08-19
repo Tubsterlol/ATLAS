@@ -3,7 +3,6 @@ class ConstellationSimulation:
         self.simulations = simulations
 
     def run_step_count(self, steps):
-
         results = []
 
         for _ in range(steps):

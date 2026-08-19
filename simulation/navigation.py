@@ -25,12 +25,7 @@ class NavigationCalculator:
         delta_lat = radians(waypoint.latitude_deg - latitude_deg)
         delta_lon = radians(waypoint.longitude_deg - longitude_deg)
 
-        a = (
-            sin(delta_lat / 2) ** 2
-            + cos(lat1)
-            * cos(lat2)
-            * sin(delta_lon / 2) ** 2
-        )
+        a = sin(delta_lat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(delta_lon / 2) ** 2
 
         c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
@@ -48,10 +43,7 @@ class NavigationCalculator:
         delta_lon = radians(waypoint.longitude_deg - longitude_deg)
 
         x = sin(delta_lon) * cos(lat2)
-        y = (
-            cos(lat1) * sin(lat2)
-            - sin(lat1) * cos(lat2) * cos(delta_lon)
-        )
+        y = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(delta_lon)
 
         bearing = atan2(x, y)
 

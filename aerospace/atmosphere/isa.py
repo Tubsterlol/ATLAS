@@ -9,12 +9,10 @@ GRAVITY = 9.80665
 
 
 def isa_temperature(altitude_m: float) -> float:
-
     return SEA_LEVEL_TEMPERATURE - TEMPERATURE_LAPSE_RATE * altitude_m
 
 
 def isa_pressure(altitude_m: float) -> float:
-
     temperature = isa_temperature(altitude_m)
 
     exponent = GRAVITY / (GAS_CONSTANT_AIR * TEMPERATURE_LAPSE_RATE)
@@ -23,7 +21,6 @@ def isa_pressure(altitude_m: float) -> float:
 
 
 def isa_density(altitude_m: float) -> float:
-
     pressure = isa_pressure(altitude_m)
 
     temperature = isa_temperature(altitude_m)

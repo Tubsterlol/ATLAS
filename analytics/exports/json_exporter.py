@@ -7,7 +7,9 @@ from enum import Enum
 def export_json(results, filepath: str | Path) -> None:
     """Export dataclass result records to JSON, creating parent directories if needed."""
     if results is None:
-        raise ValueError("results must be an iterable of dataclass result records; got None")
+        raise ValueError(
+            "results must be an iterable of dataclass result records; got None"
+        )
 
     rows = []
     for index, result in enumerate(results):

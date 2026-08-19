@@ -8,7 +8,6 @@ from aerospace.physics.constants import EARTH_STANDARD_GRAVITY, SEA_LEVEL_AIR_DE
 
 
 def aircraft_weight(mass_kg: float) -> float:
-
     return mass_kg * EARTH_STANDARD_GRAVITY
 
 
@@ -17,7 +16,6 @@ def aircraft_weight(mass_kg: float) -> float:
 
 
 def aircraft_wing_loading(mass_kg: float, wing_area_m2: float) -> float:
-
     weight = aircraft_weight(mass_kg)
 
     return wing_loading(weight, wing_area_m2)
@@ -28,7 +26,6 @@ def aircraft_wing_loading(mass_kg: float, wing_area_m2: float) -> float:
 
 
 def stall_speed(mass_kg: float, wing_area_m2: float, lift_coefficient: float) -> float:
-
     weight = aircraft_weight(mass_kg)
 
     return math.sqrt(
@@ -41,7 +38,6 @@ def stall_speed(mass_kg: float, wing_area_m2: float, lift_coefficient: float) ->
 
 
 def aircraft_thrust_to_weight(thrust_n: float, mass_kg: float) -> float:
-
     weight = aircraft_weight(mass_kg)
 
     return thrust_to_weight_ratio(thrust_n, weight)
@@ -54,7 +50,6 @@ def aircraft_thrust_to_weight(thrust_n: float, mass_kg: float) -> float:
 def climb_rate(
     thrust_n: float, drag_n: float, velocity_ms: float, mass_kg: float
 ) -> float:
-
     weight = aircraft_weight(mass_kg)
 
     excess_thrust = thrust_n - drag_n

@@ -67,7 +67,9 @@ class MissionProfile:
             return MissionTargets(
                 phase=phase,
                 target_altitude_m=self.cruise_altitude_m,
-                target_climb_rate_ms=self.phase_profiles[MissionPhase.CLIMB].climb_rate_ms,
+                target_climb_rate_ms=self.phase_profiles[
+                    MissionPhase.CLIMB
+                ].climb_rate_ms,
             )
 
         if phase == MissionPhase.CRUISE:
@@ -81,7 +83,9 @@ class MissionProfile:
             return MissionTargets(
                 phase=phase,
                 target_altitude_m=self.landing_transition_altitude_m,
-                target_climb_rate_ms=-self.phase_profiles[MissionPhase.DESCENT].descent_rate_ms,
+                target_climb_rate_ms=-self.phase_profiles[
+                    MissionPhase.DESCENT
+                ].descent_rate_ms,
             )
 
         if phase == MissionPhase.LANDING:

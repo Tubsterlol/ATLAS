@@ -2,7 +2,6 @@ from aerospace.satellite.orbit.vis_viva import orbital_velocity
 
 
 def test_leo_orbital_velocity():
-
     velocity = orbital_velocity(400_000)
 
     # ISS-like orbit

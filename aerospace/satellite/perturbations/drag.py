@@ -11,7 +11,6 @@ def satellite_drag_force(
     drag_coefficient: float,
     cross_sectional_area_m2: float,
 ) -> float:
-
     density = orbital_density(altitude_m)
 
     return drag_force(

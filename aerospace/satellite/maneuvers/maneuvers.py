@@ -8,7 +8,6 @@ def orbit_raise(
     altitude_m: float,
     delta_v_ms: float,
 ) -> float:
-
     r = EARTH_RADIUS_M + altitude_m
 
     v = (EARTH_GRAVITATIONAL_PARAMETER / r) ** 0.5
@@ -29,7 +28,6 @@ def orbit_lower(
     altitude_m: float,
     delta_v_ms: float,
 ) -> float:
-
     return orbit_raise(
         altitude_m,
         -abs(delta_v_ms),

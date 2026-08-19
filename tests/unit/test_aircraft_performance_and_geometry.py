@@ -42,9 +42,9 @@ def test_stall_speed_decreases_with_more_wing_area():
 
 
 def test_thrust_to_weight_and_climb_rate_use_excess_thrust():
-    assert aircraft_thrust_to_weight(thrust_n=98_066.5, mass_kg=10_000.0) == pytest.approx(
-        1.0
-    )
+    assert aircraft_thrust_to_weight(
+        thrust_n=98_066.5, mass_kg=10_000.0
+    ) == pytest.approx(1.0)
     assert climb_rate(
         thrust_n=120_000.0,
         drag_n=20_000.0,

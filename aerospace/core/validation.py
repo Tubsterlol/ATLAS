@@ -18,6 +18,4 @@ def require_non_negative(value: float, name: str) -> None:
 
 def require_in_range(value: float, name: str, minimum: float, maximum: float) -> None:
     if not minimum <= value <= maximum:
-        raise ValueError(
-            f"{name} must be between {minimum} and {maximum}; got {value}"
-        )
+        raise ValueError(f"{name} must be between {minimum} and {maximum}; got {value}")

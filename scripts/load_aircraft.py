@@ -41,7 +41,9 @@ def load_aircraft_dataset(filepath: str | Path) -> dict[str, Aircraft]:
                 for aircraft in [_parse_aircraft_row(row, row_number, path)]
             }
     except csv.Error as error:
-        raise ValueError(f"Aircraft dataset is not valid CSV: {path}: {error}") from error
+        raise ValueError(
+            f"Aircraft dataset is not valid CSV: {path}: {error}"
+        ) from error
 
 
 def _validate_columns(columns, required_columns: set[str], path: Path) -> None:
