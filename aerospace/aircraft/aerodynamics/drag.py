@@ -1,6 +1,3 @@
-from aerospace.physics.aerodynamics import drag_force
-
-
 def aircraft_drag(
     density: float,
     velocity_ms: float,

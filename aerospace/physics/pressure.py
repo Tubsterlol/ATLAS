@@ -1,5 +1,3 @@
-import math
-
 from aerospace.physics.constants import (
     EARTH_STANDARD_GRAVITY,
     SEA_LEVEL_PRESSURE,

@@ -27,5 +27,3 @@ class Aircraft:
         require_non_negative(self.thrust_n, "thrust_n")
         require_positive(self.max_speed_ms, "max_speed_ms")
         require_non_negative(self.fuel_burn_kg_s, "fuel_burn_kg_s")
-        if not isinstance(self.geometry, AircraftGeometry):
-            raise ValueError("geometry must be an AircraftGeometry instance")

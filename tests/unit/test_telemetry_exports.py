@@ -1,6 +1,4 @@
 import json
-from pathlib import Path
-
 from simulation.telemetry import TelemetryRecorder
 from simulation.state import AircraftState
 from simulation.mission_phase import MissionPhase

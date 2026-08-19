@@ -25,7 +25,6 @@ from aerospace.physics.constants import (
 )
 from simulation.base import BaseSimulation
 from simulation.results import AircraftResult
-from simulation.state import AircraftState
 from simulation.telemetry import TelemetryRecorder
 from simulation.timestep import advance_time
 

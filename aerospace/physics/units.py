@@ -1,5 +1,18 @@
-from aerospace.physics.constants import *
-
+from aerospace.physics.constants import (
+    DEG_TO_RAD,
+    FT_TO_M,
+    KG_TO_LBS,
+    KMH_TO_MS,
+    KM_TO_M,
+    LBS_TO_KG,
+    MILES_TO_KM,
+    MPH_TO_MS,
+    M_TO_FT,
+    M_TO_KM,
+    MS_TO_KMH,
+    MS_TO_MPH,
+    RAD_TO_DEG,
+)
 # Distance
 
 
