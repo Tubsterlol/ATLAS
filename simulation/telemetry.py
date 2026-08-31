@@ -5,8 +5,14 @@ from analytics.exports import export_csv, export_json
 from pathlib import Path
 
 
-@dataclass
+@dataclass(frozen=True)
 class TelemetryRecord:
+    """Immutable snapshot of the state at one simulation step.
+
+    Telemetry exists to observe what the simulation actually did; it never
+    owns or mutates the authoritative simulation state.
+    """
+
     time_s: float
     altitude_m: float
     velocity_ms: float
@@ -15,6 +21,11 @@ class TelemetryRecord:
     heading_deg: float
     alpha_deg: float
     phase: MissionPhase
+    current_waypoint_id: str | None = None
+    distance_to_waypoint_m: float = 0.0
+    heading_error_deg: float = 0.0
+    remaining_waypoint_count: int = 0
+    mission_completed: bool = False
 
 
 class TelemetryRecorder:
@@ -22,16 +33,31 @@ class TelemetryRecorder:
         self.records: list[TelemetryRecord] = []
 
     def record(self, state):
+        navigation_status = getattr(state, "navigation_status", {}) or {}
+
+        # Snapshot the current state values at this step so later state changes
+        # do not mutate the recorded observation.
         self.records.append(
             TelemetryRecord(
-                time_s=state.time_s,
-                altitude_m=state.altitude_m,
-                velocity_ms=state.velocity_ms,
-                fuel_kg=state.fuel_kg,
-                climb_rate_ms=state.climb_rate_ms,
-                heading_deg=state.heading_deg,
-                alpha_deg=state.alpha_deg,
+                time_s=float(state.time_s),
+                altitude_m=float(state.altitude_m),
+                velocity_ms=float(state.velocity_ms),
+                fuel_kg=float(state.fuel_kg),
+                climb_rate_ms=float(state.climb_rate_ms),
+                heading_deg=float(state.heading_deg),
+                alpha_deg=float(state.alpha_deg),
                 phase=state.phase,
+                current_waypoint_id=navigation_status.get("current_waypoint_id"),
+                distance_to_waypoint_m=float(
+                    navigation_status.get("distance_to_waypoint_m", 0.0)
+                ),
+                heading_error_deg=float(
+                    navigation_status.get("heading_error_deg", 0.0)
+                ),
+                remaining_waypoint_count=int(
+                    navigation_status.get("remaining_waypoint_count", 0)
+                ),
+                mission_completed=bool(navigation_status.get("mission_completed", False)),
             )
         )
 

@@ -108,3 +108,48 @@ def test_reach_radius_must_be_positive():
         WaypointMission([Waypoint("WP1", 0.0, 0.0)], reach_radius_m=0.0)
 
     assert "reach_radius_m" in str(excinfo.value)
+
+
+def test_waypoint_mission_reports_navigation_telemetry():
+    mission = WaypointMission(
+        [
+            Waypoint("WP1", 1000.0, 0.0),
+            Waypoint("WP2", 2000.0, 0.0),
+        ],
+        reach_radius_m=10.0,
+    )
+
+    state = type(
+        "State",
+        (),
+        {"x_m": 0.0, "y_m": 0.0, "heading_deg": 90.0},
+    )()
+
+    status = mission.status(state)
+
+    assert status["current_waypoint_id"] == "WP1"
+    assert status["distance_to_waypoint_m"] == pytest.approx(1000.0)
+    assert status["heading_error_deg"] == pytest.approx(0.0)
+    assert status["remaining_waypoint_count"] == 1
+    assert status["mission_completed"] is False
+
+
+def test_waypoint_mission_status_tracks_completion_state():
+    mission = WaypointMission(
+        [Waypoint("WP1", 1000.0, 0.0)],
+        reach_radius_m=10.0,
+    )
+
+    state = type(
+        "State",
+        (),
+        {"x_m": 995.0, "y_m": 0.0, "heading_deg": 90.0},
+    )()
+
+    mission.update(state)
+    status = mission.status(state)
+
+    assert mission.completed is True
+    assert status["current_waypoint_id"] is None
+    assert status["remaining_waypoint_count"] == 0
+    assert status["mission_completed"] is True
