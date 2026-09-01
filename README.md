@@ -91,6 +91,12 @@ pytest -q
 
 Because the project root is bind-mounted into `/app`, changes made on the host are available immediately inside the container.
 
+## Telemetry and output
+
+ATLAS records simulation telemetry as a sequence of immutable snapshots during each time step. The recorder lives in `simulation/telemetry.py` and stores values such as time, altitude, velocity, fuel, heading, climb rate, and current mission/waypoint state in a `TelemetryRecord` list.
+
+Telemetry is captured automatically as the simulator advances, but it is not written to the console by default. There is no active logging configuration that sends telemetry to stdout or stderr, so a normal run does not emit a telemetry stream unless you configure logging separately.
+
 ## Testing
 
 Install the package and test dependencies first, then run the full suite from the repository root:
