@@ -2,7 +2,6 @@ from dataclasses import dataclass
 
 from aerospace.satellite.maneuvers.maneuvers import orbit_raise
 from aerospace.satellite.orbit.vis_viva import orbital_velocity
-
 from simulation.maneuvers import (
     HohmannTransferManeuver,
     OrbitRaiseManeuver,

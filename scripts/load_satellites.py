@@ -3,7 +3,6 @@ from pathlib import Path
 
 from aerospace.satellite.models.satellite import Satellite
 
-
 REQUIRED_SATELLITE_COLUMNS = {
     "name",
     "mass_kg",

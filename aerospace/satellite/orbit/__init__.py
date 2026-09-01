@@ -13,13 +13,13 @@ from .vis_viva import (
 )
 
 __all__ = [
-    "orbital_velocity",
-    "escape_velocity",
-    "orbital_period",
-    "semi_major_axis",
-    "orbital_energy",
-    "apoapsis",
-    "periapsis",
-    "groundtrack_position",
     "advance_true_anomaly",
+    "apoapsis",
+    "escape_velocity",
+    "groundtrack_position",
+    "orbital_energy",
+    "orbital_period",
+    "orbital_velocity",
+    "periapsis",
+    "semi_major_axis",
 ]

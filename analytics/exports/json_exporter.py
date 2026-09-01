@@ -1,7 +1,7 @@
 import json
 from dataclasses import asdict
-from pathlib import Path
 from enum import Enum
+from pathlib import Path
 
 
 def export_json(results, filepath: str | Path) -> None:

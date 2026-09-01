@@ -1,8 +1,8 @@
 from dataclasses import dataclass
-
-from simulation.mission_phase import MissionPhase
-from analytics.exports import export_csv, export_json
 from pathlib import Path
+
+from analytics.exports import export_csv, export_json
+from simulation.mission_phase import MissionPhase
 
 
 @dataclass(frozen=True)

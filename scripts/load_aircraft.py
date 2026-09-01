@@ -4,7 +4,6 @@ from pathlib import Path
 from aerospace.aircraft.geometry.geometry import AircraftGeometry
 from aerospace.aircraft.models.aircraft import Aircraft
 
-
 REQUIRED_AIRCRAFT_COLUMNS = {
     "name",
     "manufacturer",

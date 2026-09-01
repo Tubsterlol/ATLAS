@@ -8,8 +8,8 @@ from .performance import (
 )
 
 __all__ = [
+    "aircraft_thrust_to_weight",
     "mach_number",
     "reynolds_number",
     "stall_speed",
-    "aircraft_thrust_to_weight",
 ]

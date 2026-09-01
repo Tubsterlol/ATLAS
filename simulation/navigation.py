@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from math import atan2, cos, pi, radians, sin, sqrt
 
-
 EARTH_RADIUS_M = 6_371_000.0
 
 

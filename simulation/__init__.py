@@ -8,13 +8,13 @@ from .telemetry import TelemetryRecord, TelemetryRecorder
 from .waypoint_mission import WaypointMission
 
 __all__ = [
-    "MissionProfile",
-    "MissionEvent",
-    "GearUpEvent",
     "FlapsRetractEvent",
+    "GearUpEvent",
     "MissionEvaluator",
-    "MissionResult",
+    "MissionEvent",
     "MissionPhase",
+    "MissionProfile",
+    "MissionResult",
     "SatelliteMissionPhase",
     "SatelliteMissionProfile",
     "TelemetryRecord",
