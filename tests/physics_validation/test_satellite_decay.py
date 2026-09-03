@@ -1,5 +1,5 @@
-from aerospace.satellite.models.satellite import Satellite
 from aerospace.satellite.perturbations.decay import simulate_decay_step
+from aerospace.satellite.satellite import Satellite
 
 
 def test_altitude_decay():

@@ -1,4 +1,4 @@
-from aerospace.satellite.models.satellite import Satellite
+from aerospace.satellite.satellite import Satellite
 
 ISS = Satellite(
     name="ISS",

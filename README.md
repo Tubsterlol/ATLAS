@@ -24,12 +24,13 @@ It is intended for engineering education, prototyping, and experimentation. The 
 ## Repository layout
 
 ```text
-aerospace/       Reusable aircraft, satellite, atmosphere, physics, and navigation models
-simulation/      State objects, time stepping, simulators, profiles, maneuvers, and scenarios
+aerospace/       Aircraft, satellite, atmosphere, physics, and navigation models
+simulation/      Core mechanics plus aircraft, satellite, and scenario simulators
 analytics/       CSV/JSON export and plotting helpers
 datasets/        Aircraft and satellite CSV datasets used by the examples
-examples/        Runnable simulations and orbital-parameter demonstrations
-tests/           Physics validation and aircraft/satellite unit tests
+examples/        Runnable aircraft and satellite simulations
+tests/           Unit, integration, and physics/regression validation
+rust/            Optional Rust simulation engine crates
 ```
 
 ## Quick start
@@ -53,7 +54,7 @@ python -m pip install .
 Run an aircraft scenario from the repository root:
 
 ```bash
-python examples/scenario_demo.py
+python examples/aircraft/scenario_demo.py
 ```
 
 This loads the F-16 from `datasets/aircraft/military.csv`, simulates 1,000 one-second steps, and prints the first and last `AircraftResult`.
@@ -61,13 +62,13 @@ This loads the F-16 from `datasets/aircraft/military.csv`, simulates 1,000 one-s
 For a quick orbital calculation:
 
 ```bash
-python examples/iss_orbital_parameters.py
+python examples/satellite/orbital_parameters.py
 ```
 
 To run the F-22 performance example and write a CSV to the outputs directory:
 
 ```bash
-python examples/f22_performance.py
+python examples/aircraft/f22_performance.py
 ```
 
 ### Docker Compose workflow
@@ -83,9 +84,9 @@ From inside the container, you can run the examples or tests directly:
 
 ```bash
 python -m pip install .
-python examples/scenario_demo.py
-python examples/iss_orbital_parameters.py
-python examples/f22_performance.py
+python examples/aircraft/scenario_demo.py
+python examples/satellite/orbital_parameters.py
+python examples/aircraft/f22_performance.py
 pytest -q
 ```
 
@@ -93,7 +94,7 @@ Because the project root is bind-mounted into `/app`, changes made on the host a
 
 ## Telemetry and output
 
-ATLAS records simulation telemetry as a sequence of immutable snapshots during each time step. The recorder lives in `simulation/telemetry.py` and stores values such as time, altitude, velocity, fuel, heading, climb rate, and current mission/waypoint state in a `TelemetryRecord` list.
+ATLAS records simulation telemetry as a sequence of immutable snapshots during each time step. The recorder lives in `simulation/core/telemetry.py` and stores values such as time, altitude, velocity, fuel, heading, climb rate, and current mission/waypoint state in a `TelemetryRecord` list.
 
 Telemetry is captured automatically as the simulator advances, but it is not written to the console by default. There is no active logging configuration that sends telemetry to stdout or stderr, so a normal run does not emit a telemetry stream unless you configure logging separately.
 

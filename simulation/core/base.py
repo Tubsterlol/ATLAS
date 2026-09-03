@@ -1,4 +1,4 @@
-from simulation.state import SimulationState
+from simulation.core.state import SimulationState
 
 
 class BaseSimulation:

@@ -2,9 +2,9 @@ from dataclasses import FrozenInstanceError
 
 import pytest
 
+from simulation.core.state import AircraftState
+from simulation.core.telemetry import TelemetryRecorder
 from simulation.mission_phase import MissionPhase
-from simulation.state import AircraftState
-from simulation.telemetry import TelemetryRecorder
 
 
 def test_telemetry_records_aircraft_state():

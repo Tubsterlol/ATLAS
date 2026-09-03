@@ -1,5 +1,5 @@
-from aerospace.aircraft.models.aircraft import Aircraft
-from simulation.aircraft_simulator import AircraftSimulation
+from aerospace.aircraft.aircraft import Aircraft
+from simulation.aircraft.simulator import AircraftSimulation
 
 aircraft = Aircraft(
     name="F-16",

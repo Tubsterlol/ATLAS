@@ -7,7 +7,7 @@ from aerospace.core.validation import (
     require_positive,
 )
 from simulation.mission_phase import MissionPhase
-from simulation.satellite_mission_phase import SatelliteMissionPhase
+from simulation.satellite.mission_phase import SatelliteMissionPhase
 
 
 @dataclass

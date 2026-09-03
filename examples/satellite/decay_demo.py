@@ -1,7 +1,7 @@
-from aerospace.satellite.models.satellite import Satellite
-from simulation.satellite_mission_profile import SatelliteMissionProfile
-from simulation.satellite_simulator import SatelliteSimulation
-from simulation.state import SatelliteState
+from aerospace.satellite.satellite import Satellite
+from simulation.core.state import SatelliteState
+from simulation.satellite.mission_profile import SatelliteMissionProfile
+from simulation.satellite.simulator import SatelliteSimulation
 
 satellite = Satellite(
     name="ATLAS-1",

@@ -7,12 +7,36 @@ CSV dataset or benchmark → Aircraft/Satellite model → State + mission profil
 → AircraftSimulation/SatelliteSimulation → Result records → CSV/JSON/graphs
 ```
 
+## Repository structure
+
+```text
+aerospace/
+	aircraft/      Aircraft models, aerodynamics, geometry, and propulsion
+	satellite/     Satellite models, orbital mechanics, maneuvers, and perturbations
+	atmosphere/    Atmospheric models
+	physics/       Shared constants and physical calculations
+	navigation/    Navigation calculations
+simulation/
+	core/          State, results, telemetry, integration, and time stepping
+	aircraft/      Aircraft simulator, profiles, and waypoint navigation
+	satellite/     Satellite simulator, profiles, and maneuvers
+	scenarios/     Scenario definitions, runners, and constellation execution
+analytics/       Metrics, graphs, exports, and reports
+datasets/        Input aircraft and satellite records
+examples/        Runnable examples grouped by domain
+tests/           Unit, integration, and validation tests
+rust/            Optional Rust simulation engine crates
+```
+
 ## Packages
 
 | Package | Responsibility |
 | --- | --- |
-| `aerospace` | Physics, atmosphere, navigation, aircraft, and satellite calculations. |
-| `simulation` | Mutable state, time stepping, mission profiles, maneuvers, scenario runners, and simulators. |
+| `aerospace` | Aircraft, satellite, atmosphere, navigation, and shared physics calculations. |
+| `simulation.core` | Mutable state, time stepping, integration, results, and telemetry. |
+| `simulation.aircraft` | Aircraft propagation, flight profiles, and waypoint navigation. |
+| `simulation.satellite` | Satellite propagation, mission profiles, and maneuvers. |
+| `simulation.scenarios` | Scenario definitions, runners, and constellation simulation. |
 | `analytics` | Result export and visualization helpers. |
 | `scripts` | CSV dataset loading. |
 | `datasets` | Example aircraft and satellite input records. |

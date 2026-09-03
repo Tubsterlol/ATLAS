@@ -1,8 +1,8 @@
 import pytest
 
-from simulation.mission_evaluator import MissionEvaluator
+from simulation.core.telemetry import TelemetryRecord
+from simulation.evaluation import MissionEvaluator
 from simulation.mission_phase import MissionPhase
-from simulation.telemetry import TelemetryRecord
 
 
 def test_evaluator_rejects_empty_telemetry():

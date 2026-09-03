@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from simulation.satellite_mission_phase import SatelliteMissionPhase
+from simulation.satellite.mission_phase import SatelliteMissionPhase
 
 
 @dataclass

@@ -23,10 +23,10 @@ from aerospace.navigation.navigation import update_position
 from aerospace.physics.constants import (
     EARTH_STANDARD_GRAVITY,
 )
-from simulation.base import BaseSimulation
-from simulation.results import AircraftResult
-from simulation.telemetry import TelemetryRecorder
-from simulation.timestep import advance_time
+from simulation.core.base import BaseSimulation
+from simulation.core.results import AircraftResult
+from simulation.core.telemetry import TelemetryRecorder
+from simulation.core.timestep import advance_time
 
 logger = logging.getLogger(__name__)
 

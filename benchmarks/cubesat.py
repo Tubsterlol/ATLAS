@@ -1,4 +1,4 @@
-from aerospace.satellite.models.satellite import Satellite
+from aerospace.satellite.satellite import Satellite
 
 CUBESAT = Satellite(
     name="CubeSat",

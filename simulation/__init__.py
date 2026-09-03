@@ -1,13 +1,20 @@
-from .mission_evaluator import MissionEvaluator, MissionResult
+from .aircraft.simulator import AircraftSimulation
+from .aircraft.waypoint_mission import WaypointMission
+from .core.results import AircraftResult, SatelliteResult
+from .core.state import AircraftState, SatelliteState, SimulationState
+from .core.telemetry import TelemetryRecord, TelemetryRecorder
+from .evaluation import MissionEvaluator, MissionResult
 from .mission_events import FlapsRetractEvent, GearUpEvent, MissionEvent
 from .mission_phase import MissionPhase
 from .mission_profile import MissionProfile
-from .satellite_mission_phase import SatelliteMissionPhase
-from .satellite_mission_profile import SatelliteMissionProfile
-from .telemetry import TelemetryRecord, TelemetryRecorder
-from .waypoint_mission import WaypointMission
+from .satellite.mission_phase import SatelliteMissionPhase
+from .satellite.mission_profile import SatelliteMissionProfile
+from .satellite.simulator import SatelliteSimulation
 
 __all__ = [
+    "AircraftResult",
+    "AircraftSimulation",
+    "AircraftState",
     "FlapsRetractEvent",
     "GearUpEvent",
     "MissionEvaluator",
@@ -17,6 +24,10 @@ __all__ = [
     "MissionResult",
     "SatelliteMissionPhase",
     "SatelliteMissionProfile",
+    "SatelliteResult",
+    "SatelliteSimulation",
+    "SatelliteState",
+    "SimulationState",
     "TelemetryRecord",
     "TelemetryRecorder",
     "WaypointMission",

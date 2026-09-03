@@ -1,6 +1,6 @@
 import pytest
 
-from simulation.navigation import NavigationCalculator, Waypoint
+from simulation.aircraft.navigation import NavigationCalculator, Waypoint
 
 
 def test_waypoint_stores_coordinates():

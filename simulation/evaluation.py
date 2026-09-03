@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
+from .core.telemetry import TelemetryRecord
 from .mission_phase import MissionPhase
-from .telemetry import TelemetryRecord
 
 
 @dataclass

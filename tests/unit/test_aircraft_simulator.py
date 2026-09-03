@@ -1,14 +1,14 @@
 import pytest
 
+from aerospace.aircraft.aircraft import Aircraft
 from aerospace.aircraft.geometry.geometry import AircraftGeometry
-from aerospace.aircraft.models.aircraft import Aircraft
-from simulation.aircraft_simulator import AircraftSimulation
-from simulation.flight_profiles import CruiseProfile
+from simulation.aircraft.flight_profiles import CruiseProfile
+from simulation.aircraft.simulator import AircraftSimulation
+from simulation.aircraft.waypoint import Waypoint
+from simulation.aircraft.waypoint_mission import WaypointMission
+from simulation.core.state import AircraftState
 from simulation.mission_phase import MissionPhase
 from simulation.mission_profile import MissionProfile
-from simulation.state import AircraftState
-from simulation.waypoint import Waypoint
-from simulation.waypoint_mission import WaypointMission
 
 
 def make_aircraft():

@@ -1,8 +1,8 @@
 import pytest
 
+from simulation.core.state import AircraftState
 from simulation.mission_phase import MissionPhase
 from simulation.mission_profile import MissionProfile
-from simulation.state import AircraftState
 
 
 class DummyNavigation:

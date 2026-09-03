@@ -1,7 +1,7 @@
 import pytest
 
-from simulation.waypoint import Waypoint
-from simulation.waypoint_mission import WaypointMission
+from simulation.aircraft.waypoint import Waypoint
+from simulation.aircraft.waypoint_mission import WaypointMission
 
 
 def test_current_waypoint():

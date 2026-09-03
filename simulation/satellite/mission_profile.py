@@ -1,14 +1,14 @@
 from dataclasses import dataclass
 
 from aerospace.satellite.maneuvers.maneuvers import orbit_raise
-from aerospace.satellite.orbit.vis_viva import orbital_velocity
-from simulation.maneuvers import (
+from aerospace.satellite.orbital.vis_viva import orbital_velocity
+from simulation.satellite.maneuvers import (
     HohmannTransferManeuver,
     OrbitRaiseManeuver,
     StationKeepingManeuver,
 )
-from simulation.satellite_mission_phase import SatelliteMissionPhase
-from simulation.station_keeping import station_keep
+from simulation.satellite.mission_phase import SatelliteMissionPhase
+from simulation.satellite.station_keeping import station_keep
 
 
 @dataclass(frozen=True)

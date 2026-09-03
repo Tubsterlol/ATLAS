@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from simulation.flight_profiles import (
+from simulation.aircraft.flight_profiles import (
     ClimbProfile,
     CruiseProfile,
     DescentProfile,

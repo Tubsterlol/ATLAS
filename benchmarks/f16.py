@@ -1,4 +1,4 @@
-from aerospace.aircraft.models.aircraft import Aircraft
+from aerospace.aircraft.aircraft import Aircraft
 
 F16 = Aircraft(
     name="F-16",

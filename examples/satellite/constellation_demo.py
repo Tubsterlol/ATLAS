@@ -1,13 +1,13 @@
 from analytics.exports.csv_exporter import export_csv
 from scripts.load_satellites import load_satellite_dataset
-from simulation.constellation_simulation import (
-    ConstellationSimulation,
-)
-from simulation.satellite_mission_profile import SatelliteMissionProfile
-from simulation.satellite_simulator import (
+from simulation.core.state import SatelliteState
+from simulation.satellite.mission_profile import SatelliteMissionProfile
+from simulation.satellite.simulator import (
     SatelliteSimulation,
 )
-from simulation.state import SatelliteState
+from simulation.scenarios.constellation import (
+    ConstellationSimulation,
+)
 
 satellites = load_satellite_dataset("datasets/satellites/satellites.csv")
 

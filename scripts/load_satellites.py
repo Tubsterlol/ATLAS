@@ -1,7 +1,7 @@
 import csv
 from pathlib import Path
 
-from aerospace.satellite.models.satellite import Satellite
+from aerospace.satellite.satellite import Satellite
 
 REQUIRED_SATELLITE_COLUMNS = {
     "name",

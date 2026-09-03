@@ -1,4 +1,4 @@
-from .models.satellite import Satellite
+from .satellite import Satellite
 
 __all__ = [
     "Satellite",

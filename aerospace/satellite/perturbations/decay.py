@@ -1,4 +1,4 @@
-from aerospace.satellite.orbit.vis_viva import orbital_velocity
+from aerospace.satellite.orbital.vis_viva import orbital_velocity
 from aerospace.satellite.perturbations.drag import satellite_drag_force
 
 

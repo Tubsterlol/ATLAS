@@ -1,10 +1,10 @@
 from analytics.exports.csv_exporter import export_csv
 from scripts.load_aircraft import load_aircraft_dataset
-from simulation.aircraft_simulator import AircraftSimulation
+from simulation.aircraft.simulator import AircraftSimulation
+from simulation.aircraft.waypoint import Waypoint
+from simulation.aircraft.waypoint_mission import WaypointMission
+from simulation.core.state import AircraftState
 from simulation.mission_profile import MissionProfile
-from simulation.state import AircraftState
-from simulation.waypoint import Waypoint
-from simulation.waypoint_mission import WaypointMission
 
 aircraft = load_aircraft_dataset("datasets/aircraft/military.csv")
 

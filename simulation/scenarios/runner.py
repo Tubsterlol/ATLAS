@@ -1,15 +1,15 @@
 from scripts.load_aircraft import load_aircraft_dataset
 from scripts.load_satellites import load_satellite_dataset
-from simulation.aircraft_simulator import AircraftSimulation
-from simulation.satellite_mission_profile import SatelliteMissionProfile
-from simulation.satellite_simulator import SatelliteSimulation
-from simulation.scenarios import (
-    AircraftScenario,
-    SatelliteScenario,
-)
-from simulation.state import (
+from simulation.aircraft.simulator import AircraftSimulation
+from simulation.core.state import (
     AircraftState,
     SatelliteState,
+)
+from simulation.satellite.mission_profile import SatelliteMissionProfile
+from simulation.satellite.simulator import SatelliteSimulation
+from simulation.scenarios.definitions import (
+    AircraftScenario,
+    SatelliteScenario,
 )
 
 

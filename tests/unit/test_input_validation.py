@@ -1,10 +1,10 @@
 import pytest
 
+from aerospace.aircraft.aircraft import Aircraft
 from aerospace.aircraft.geometry.geometry import AircraftGeometry
-from aerospace.aircraft.models.aircraft import Aircraft
-from aerospace.satellite.models.satellite import Satellite
-from simulation.base import BaseSimulation
-from simulation.state import AircraftState, SimulationState
+from aerospace.satellite.satellite import Satellite
+from simulation.core.base import BaseSimulation
+from simulation.core.state import AircraftState, SimulationState
 
 
 def geometry():

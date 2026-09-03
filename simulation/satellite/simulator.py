@@ -1,8 +1,8 @@
 import logging
 
-from aerospace.satellite.orbit.groundtrack import groundtrack_position
-from aerospace.satellite.orbit.orbital_motion import advance_true_anomaly
-from aerospace.satellite.orbit.orbital_parameters import (
+from aerospace.satellite.orbital.groundtrack import groundtrack_position
+from aerospace.satellite.orbital.orbital_motion import advance_true_anomaly
+from aerospace.satellite.orbital.orbital_parameters import (
     apoapsis,
     orbital_energy,
     orbital_period,
@@ -10,11 +10,11 @@ from aerospace.satellite.orbit.orbital_parameters import (
     semi_major_axis,
 )
 from aerospace.satellite.perturbations.decay import simulate_decay_step
-from simulation.base import BaseSimulation
-from simulation.results import SatelliteResult
-from simulation.satellite_mission_profile import SatelliteMissionProfile
-from simulation.state import SatelliteState
-from simulation.timestep import advance_time
+from simulation.core.base import BaseSimulation
+from simulation.core.results import SatelliteResult
+from simulation.core.state import SatelliteState
+from simulation.core.timestep import advance_time
+from simulation.satellite.mission_profile import SatelliteMissionProfile
 
 logger = logging.getLogger(__name__)
 
