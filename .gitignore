@@ -69,6 +69,7 @@ exports/
 snapshots/
 telemetry/
 recordings/
+forme/
 
 # Generated analytics
 analytics/exports/generated/
