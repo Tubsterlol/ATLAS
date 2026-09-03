@@ -30,7 +30,7 @@ analytics/       CSV/JSON export and plotting helpers
 datasets/        Aircraft and satellite CSV datasets used by the examples
 examples/        Runnable aircraft and satellite simulations
 tests/           Unit, integration, and physics/regression validation
-rust/            Optional Rust simulation engine crates
+rust/            Planned Rust simulation engine crates
 ```
 
 ## Quick start
@@ -97,6 +97,18 @@ Because the project root is bind-mounted into `/app`, changes made on the host a
 ATLAS records simulation telemetry as a sequence of immutable snapshots during each time step. The recorder lives in `simulation/core/telemetry.py` and stores values such as time, altitude, velocity, fuel, heading, climb rate, and current mission/waypoint state in a `TelemetryRecord` list.
 
 Telemetry is captured automatically as the simulator advances, but it is not written to the console by default. There is no active logging configuration that sends telemetry to stdout or stderr, so a normal run does not emit a telemetry stream unless you configure logging separately.
+
+## Simulation imports
+
+Use the domain subpackages when importing simulation components:
+
+```python
+from simulation.aircraft.simulator import AircraftSimulation
+from simulation.core.state import AircraftState
+from simulation.satellite.simulator import SatelliteSimulation
+```
+
+The top-level `simulation` package also exposes its stable public types through lazy exports. The subpackage paths are preferred for new code because they make ownership explicit.
 
 ## Testing
 

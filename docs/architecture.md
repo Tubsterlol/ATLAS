@@ -21,11 +21,11 @@ simulation/
 	aircraft/      Aircraft simulator, profiles, and waypoint navigation
 	satellite/     Satellite simulator, profiles, and maneuvers
 	scenarios/     Scenario definitions, runners, and constellation execution
-analytics/       Metrics, graphs, exports, and reports
+analytics/       Graphs, exports, and reports
 datasets/        Input aircraft and satellite records
 examples/        Runnable examples grouped by domain
 tests/           Unit, integration, and validation tests
-rust/            Optional Rust simulation engine crates
+rust/            Planned Rust simulation engine crates
 ```
 
 ## Packages
@@ -43,6 +43,22 @@ rust/            Optional Rust simulation engine crates
 | `tests` | Physics reference checks and unit tests. |
 
 `api`, `database`, and `tui` are reserved for future product interfaces and are not active application layers.
+
+The Rust engine is planned as a native numerical kernel. It will be integrated through an adapter under `simulation` after the Python behavior has a stable parity test suite.
+
+## Import conventions
+
+New code should import from the owning subpackage:
+
+```python
+from aerospace.aircraft.aircraft import Aircraft
+from aerospace.satellite.satellite import Satellite
+from simulation.aircraft.simulator import AircraftSimulation
+from simulation.core.state import AircraftState
+from simulation.satellite.simulator import SatelliteSimulation
+```
+
+The top-level `simulation` exports remain available for compatibility, but subpackage imports are preferred because they show whether a type belongs to core mechanics, aircraft propagation, satellite propagation, or scenario execution.
 
 ## Simulation lifecycle
 
