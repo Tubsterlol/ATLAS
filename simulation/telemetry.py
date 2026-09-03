@@ -1,18 +1,12 @@
 from dataclasses import dataclass
-from pathlib import Path
 
-from analytics.exports import export_csv, export_json
 from simulation.mission_phase import MissionPhase
+from analytics.exports import export_csv, export_json
+from pathlib import Path
 
 
 @dataclass(frozen=True)
 class TelemetryRecord:
-    """Immutable snapshot of the state at one simulation step.
-
-    Telemetry exists to observe what the simulation actually did; it never
-    owns or mutates the authoritative simulation state.
-    """
-
     time_s: float
     altitude_m: float
     velocity_ms: float
@@ -35,8 +29,6 @@ class TelemetryRecorder:
     def record(self, state):
         navigation_status = getattr(state, "navigation_status", {}) or {}
 
-        # Snapshot the current state values at this step so later state changes
-        # do not mutate the recorded observation.
         self.records.append(
             TelemetryRecord(
                 time_s=float(state.time_s),

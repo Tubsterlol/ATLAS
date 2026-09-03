@@ -69,6 +69,11 @@ def test_evaluator_calculates_mission_result():
     assert result.fuel_consumed_kg == 1000.0
     assert result.final_altitude_m == 0.0
     assert result.final_velocity_ms == 150.0
+    assert result.final_waypoint == "WP2"
+    assert result.waypoints_completed == 3
+    assert result.total_time_s == 200.0
+    assert result.fuel_remaining_kg == 2000.0
+    assert result.max_altitude_m == 1000.0
     assert result.current_waypoint_id is None
     assert result.remaining_waypoint_count == 0
     assert result.heading_error_deg == pytest.approx(0.0)

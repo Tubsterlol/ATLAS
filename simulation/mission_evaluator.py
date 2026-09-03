@@ -19,6 +19,11 @@ class MissionResult:
     heading_error_deg: float = 0.0
     remaining_waypoint_count: int = 0
     failure_reasons: list[str] | None = None
+    final_waypoint: str | None = None
+    waypoints_completed: int = 0
+    total_time_s: float = 0.0
+    fuel_remaining_kg: float = 0.0
+    max_altitude_m: float = 0.0
 
 
 class MissionEvaluator:
@@ -31,6 +36,22 @@ class MissionEvaluator:
 
         first = telemetry[0]
         final = telemetry[-1]
+        route_completed = bool(final.mission_completed)
+        final_waypoint = next(
+            (
+                record.current_waypoint_id
+                for record in reversed(telemetry)
+                if record.current_waypoint_id is not None
+            ),
+            None,
+        )
+        waypoints_completed = max(
+            0,
+            first.remaining_waypoint_count - final.remaining_waypoint_count,
+        )
+        if route_completed and final_waypoint is not None:
+            waypoints_completed += 1
+        total_time_s = final.time_s - first.time_s
 
         fuel_consumed_kg = max(
             0.0,
@@ -38,7 +59,6 @@ class MissionEvaluator:
         )
 
         completed = final.phase == MissionPhase.LANDING
-        route_completed = bool(final.mission_completed)
         current_waypoint_id = final.current_waypoint_id
         distance_to_waypoint_m = float(final.distance_to_waypoint_m)
         heading_error_deg = float(final.heading_error_deg)
@@ -71,4 +91,9 @@ class MissionEvaluator:
             heading_error_deg=heading_error_deg,
             remaining_waypoint_count=remaining_waypoint_count,
             failure_reasons=failure_reasons,
+            final_waypoint=final_waypoint,
+            waypoints_completed=waypoints_completed,
+            total_time_s=total_time_s,
+            fuel_remaining_kg=final.fuel_kg,
+            max_altitude_m=max(record.altitude_m for record in telemetry),
         )
