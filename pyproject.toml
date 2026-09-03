@@ -9,10 +9,8 @@ description = "Aerospace performance and satellite dynamics simulation framework
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "numpy",
     "pandas",
     "matplotlib",
-    "rich",
 ]
 
 [project.optional-dependencies]

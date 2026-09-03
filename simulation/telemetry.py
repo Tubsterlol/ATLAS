@@ -1,8 +1,8 @@
 from dataclasses import dataclass
-
-from simulation.mission_phase import MissionPhase
-from analytics.exports import export_csv, export_json
 from pathlib import Path
+
+from analytics.exports import export_csv, export_json
+from simulation.mission_phase import MissionPhase
 
 
 @dataclass(frozen=True)
@@ -49,7 +49,9 @@ class TelemetryRecorder:
                 remaining_waypoint_count=int(
                     navigation_status.get("remaining_waypoint_count", 0)
                 ),
-                mission_completed=bool(navigation_status.get("mission_completed", False)),
+                mission_completed=bool(
+                    navigation_status.get("mission_completed", False)
+                ),
             )
         )
 
